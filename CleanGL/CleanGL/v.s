@@ -10,7 +10,7 @@ uniform mat4 projection;
 uniform mat4 scale;
 void main()
 {
-	gl_Position = scale * projection * view * model * vec4(position, 1.0f);	
+	gl_Position = projection * view * model * scale * vec4(position, 1.0f)  ;	
 
 }
 
