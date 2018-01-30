@@ -10,11 +10,14 @@
 
 class Horse {
 public:
-
+	//we use this for single press flags
 	bool w_press = false;
 	bool s_press = false;
 	bool a_press = false;
 	bool d_press = false;
+	bool space_press = false;
+
+
 
 	glm::vec3 movement_log = glm::vec3(0.0f,0.0f,0.0f);
 	glm::mat4 rotation = glm::mat4(1.0f);
