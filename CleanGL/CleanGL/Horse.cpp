@@ -16,6 +16,8 @@ void Horse::set_model(glm::mat4 &model)
 
 void Horse::draw()
 {
+
+
 	glm::mat4 scale;
 	glm::mat4 temp_horse; //makes it so you dont tamper with world model
 	temp_horse = *horse_model;
@@ -258,4 +260,6 @@ void Horse::horse_controller(GLFWwindow* window)
 		horse_size -= 0.01f;
 
 	}
+
+
 }
