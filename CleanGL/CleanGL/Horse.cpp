@@ -20,7 +20,7 @@ void Horse::draw()
 	glm::mat4 temp_horse; //makes it so you dont tamper with world model
 	temp_horse = *horse_model;
 	temp_horse *= rotation;
-	temp_horse = glm::translate(temp_horse, movement_log + glm::vec3(0.0f, 1.1f, 0.0f));
+	temp_horse = glm::translate(temp_horse, movement_log + (horse_size* glm::vec3(0.0f, 1.1f, 0.0f)));
 
 
 
