@@ -16,8 +16,9 @@ void Horse::set_model(glm::mat4 &model)
 
 void Horse::draw()
 {
-	Cube::set();
+	Cube::set(); //unit to draw
 
+	//hieirarchial model
 	draw_torso();
 	draw_upper_left_leg();
 	draw_upper_right_leg();

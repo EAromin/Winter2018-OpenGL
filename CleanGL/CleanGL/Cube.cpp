@@ -40,6 +40,7 @@ Cube::Cube()
 
 }
 
+//sets vao vbo
 void Cube::set()
 {
 	GLuint VAO;

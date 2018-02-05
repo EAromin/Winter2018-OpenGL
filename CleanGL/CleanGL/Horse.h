@@ -26,13 +26,15 @@ private:
 
 	void draw_lower_left_leg();
 	void draw_lower_right_leg();
-public:
+
 	//we use this for single press flags
 	bool w_press = false;
 	bool s_press = false;
 	bool a_press = false;
 	bool d_press = false;
 	bool space_press = false;
+public:
+
 
 	//horse part models
 	glm::mat4 torso_model; //anchor
