@@ -53,7 +53,6 @@ void Coordinates::set()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 	glBindVertexArray(axisVAO);
-
 }
 
 void Coordinates::draw()
