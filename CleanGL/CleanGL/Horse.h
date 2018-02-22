@@ -11,22 +11,22 @@
 
 class Horse {
 private:
-	void draw_core();
+	void set_core();
 
-	void draw_neck();
-	void draw_head();
+	void set_neck();
+	void set_head();
 
-	void draw_upper_left_front_leg();
-	void draw_upper_right_front_leg();
+	void set_upper_left_front_leg();
+	void set_upper_right_front_leg();
 
-	void draw_upper_left_hind_leg();
-	void draw_upper_right_hind_leg();
+	void set_upper_left_hind_leg();
+	void set_upper_right_hind_leg();
 
-	void draw_lower_left_front_leg();
-	void draw_lower_right_front_leg();
+	void set_lower_left_front_leg();
+	void set_lower_right_front_leg();
 
-	void draw_lower_left_hind_leg();
-	void draw_lower_right_hind_leg();
+	void set_lower_left_hind_leg();
+	void set_lower_right_hind_leg();
 
 	//we use this for single press flags
 	bool w_press = false;
@@ -60,20 +60,20 @@ public:
 	//remove upper part once done with making parts
 	Part* torso;
 
-	Part* neck = &CubicPart::CubicPart();
-	Part* head = &CubicPart::CubicPart();
+	Part* neck;
+	Part* head;
 
 	//upper parts
-	Part* upper_left_front_leg= &CubicPart::CubicPart();
-	Part* upper_right_front_leg= &CubicPart::CubicPart();
-	Part* upper_left_hind_leg= &CubicPart::CubicPart();
-	Part* upper_right_hind_leg= &CubicPart::CubicPart();
+	Part* upper_left_front_leg;
+	Part* upper_right_front_leg;
+	Part* upper_left_hind_leg;
+	Part* upper_right_hind_leg;
 
 	//lower parts
-	Part* lower_left_front_leg= &CubicPart::CubicPart();
-	Part* lower_right_front_leg= &CubicPart::CubicPart();
-	Part* lower_left_hind_leg= &CubicPart::CubicPart();
-	Part* lower_right_hind_leg= &CubicPart::CubicPart();
+	Part* lower_left_front_leg;
+	Part* lower_right_front_leg;
+	Part* lower_left_hind_leg;
+	Part* lower_right_hind_leg;
 	
 
 	glm::vec3 movement_log = glm::vec3(0.0f,0.0f,0.0f);
