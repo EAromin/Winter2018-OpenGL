@@ -13,28 +13,29 @@ class Part {
 private:
 protected:
 	//One-to-many Parent-to-child relationship
-	Part* parent;
+	Part* parent = nullptr;
 	std::vector<Part*> children;
 
 public:
 
 	//for the transformations
 	glm::mat4 model_matrix;
-	glm::mat4 scale;
-	glm::mat4 rotation_matrix;
-	glm::mat4 translation_matrix;
+	glm::mat4 scale_matrix = glm::mat4(1.0f);
+	glm::mat4 rotation_matrix = glm::mat4(1.0f);
+	glm::mat4 translation_matrix = glm::mat4(1.0f);
 
 	//joint's position relative to the current part
 	glm::vec3 joint_loc;
 
+	//stuff
 	GLuint *shader;
-
+	glm::vec4 color;
 
 	Part() {}; //default
 	Part(GLuint &shdr);//will be used for parent to set shader
 	Part(GLuint &shdr, Part &prnt);//for child
 
-	virtual void draw() {}; //draw it and make it call the children recursively
+	virtual void draw() = 0; //draw it and make it call the children recursively
 	void addChild( Part *child);
 };
 
