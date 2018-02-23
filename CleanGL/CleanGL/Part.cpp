@@ -17,20 +17,17 @@ void Part::rotate()
 
 
 	if (parent != nullptr) {
-
-		//model_matrix *= glm::translate(parent->rotation_matrix, (parent->joint_loc));
-		//model_matrix *= rotation_matrix;
-	//	model_matrix *= glm::translate(parent->rotation_matrix, -(parent->joint_loc));
-
-		rotation_matrix *= glm::translate(translation_matrix, (joint_loc));
+		rotation_matrix *= glm::translate(glm::mat4(1.0), (joint_loc - parent->joint_loc));
 		model_matrix *= rotation_matrix;
-		rotation_matrix *= glm::translate(translation_matrix, -(joint_loc));
-	}else{
-		model_matrix *= glm::translate(translation_matrix, (joint_loc));
-		model_matrix *= rotation_matrix;
-		model_matrix *= glm::translate(translation_matrix, -(joint_loc));
+		rotation_matrix *= glm::translate(glm::mat4(1.0), -(joint_loc - parent->joint_loc));
 	}
-	
+	else
+	{
+		rotation_matrix *= glm::translate(glm::mat4(1.0), (joint_loc));
+		model_matrix *= rotation_matrix;
+		rotation_matrix *= glm::translate(glm::mat4(1.0), -(joint_loc));
+	}
+
 }
 
 Part::Part(GLuint & shdr)
@@ -46,17 +43,14 @@ Part::Part(GLuint & shdr, Part & prnt) //ref to a parent
 	if (parent != nullptr)
 	{
 		model_matrix = parent->model_matrix;
-		//parent trans passing down
 		scale_matrix = parent->scale_matrix;
-		model_matrix *= parent->rotation_matrix;
-		model_matrix *= parent->translation_matrix;
-
+		//parent rotation passing down
 		//rotation_matrix *= glm::translate(glm::mat4(1.0), (parent->joint_loc-joint_loc));
-		//rotation_matrix = parent->rotation_matrix;
+		rotation_matrix = parent->rotation_matrix;
 		//rotation_matrix *= glm::translate(glm::mat4(1.0), -(parent->joint_loc-joint_loc));
 		//rotation_matrix = parent->rotation_matrix;
-		//translation_matrix = parent->translation_matrix;
-	}
+		translation_matrix = parent->translation_matrix;
+	}	
 }
 
 
