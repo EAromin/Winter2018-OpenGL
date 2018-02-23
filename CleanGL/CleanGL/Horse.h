@@ -61,8 +61,9 @@ public:
 	Part* torso;
 
 	Part* neck;
+	glm::vec3 neckrot = glm::vec3(0.0f,0.0f, 0.0f);
 	Part* head;
-
+	glm::vec3 headrot = glm::vec3(0.0f, 0.0f, 0.0f);
 	//upper parts
 	Part* upper_left_front_leg;
 	Part* upper_right_front_leg;

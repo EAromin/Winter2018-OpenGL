@@ -13,8 +13,8 @@ class Part {
 private:
 protected:
 	//One-to-many Parent-to-child relationship
-	Part* parent = nullptr;
 	std::vector<Part*> children;
+	void rotate();
 
 public:
 
@@ -26,6 +26,7 @@ public:
 
 	//joint's position relative to the current part
 	glm::vec3 joint_loc;
+	Part* parent = nullptr;
 
 	//stuff
 	GLuint *shader;

@@ -23,11 +23,14 @@ void Horse::draw()
 	neck = &CubicPart::CubicPart(*horse_shader, *torso);
 	set_neck();
 
-	head = &CubicPart::CubicPart(*horse_shader);
+	head = &CubicPart::CubicPart(*horse_shader,*neck);
+	set_head();
+
 	upper_left_front_leg= &CubicPart::CubicPart(*horse_shader);
 	upper_right_front_leg= &CubicPart::CubicPart(*horse_shader);
 	upper_left_hind_leg= &CubicPart::CubicPart(*horse_shader);
 	upper_right_hind_leg= &CubicPart::CubicPart(*horse_shader);
+
 	lower_left_front_leg= &CubicPart::CubicPart(*horse_shader);
 	lower_right_front_leg= &CubicPart::CubicPart(*horse_shader);
 	lower_left_hind_leg= &CubicPart::CubicPart(*horse_shader);
@@ -206,6 +209,22 @@ void Horse::horse_controller(GLFWwindow* window)
 	}
 
 
+	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS))
+	{
+		neckrot.y += 2.0f;
+	}else	if (glfwGetKey(window, GLFW_KEY_X) == GLFW_PRESS) {
+		neckrot.y -= 2.0f;
+
+	}
+	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS))
+	{
+		headrot.y += 2.0f;
+	}
+	else
+	if (glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS) {
+		headrot.y -= 2.0f;
+
+	}
 }
 
 void Horse::set_core()
@@ -386,18 +405,19 @@ void Horse::set_neck() {
 	//glUniform4f(glGetUniformLocation(*horse_shader, "col"), 0.7019607843137255f, 0.1647058823529412f, 0.0f, 1.0f);
 	//Cube::draw();
 
-
+	neck->joint_loc = -horse_size*glm::vec3(.0f, -0.325f, 0.0f);
 	neck->scale_matrix = glm::scale(glm::mat4(1.0f), horse_size*glm::vec3(0.30f, 0.65f, 0.30f));
-	neck->model_matrix *= glm::translate(glm::mat4(1.0f),(horse_size*glm::vec3(0.f, 0.4f, 0.0f))); // move it according to world xyz, base position of it. 
-	neck->translation_matrix = glm::translate(neck->translation_matrix, horse_size*glm::vec3(-0.6f, 0.125f, 0.0f));
-	neck->rotation_matrix = glm::rotate(neck->rotation_matrix, glm::radians(40.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	neck->model_matrix *= glm::translate(glm::mat4(1.0f), horse_size*glm::vec3(-0.3f, 0.0f, 0.0f)); // move it according to world xyz, base position of it. 
+	//neck->translation_matrix = glm::translate(neck->translation_matrix, horse_size*glm::vec3(-0.6f, 0.125f, 0.0f));
+	neck->rotation_matrix = glm::rotate(neck->rotation_matrix, glm::radians(40.0f + neckrot.y), glm::vec3(0.0f, 0.0f, 1.0f));
+	neck->rotation_matrix = glm::rotate(neck->rotation_matrix, glm::radians(neckrot.x), glm::vec3(0.0f, 1.0f, 0.0f));
 	neck->color = glm::vec4(0.7019607843137255f, 0.1647058823529412f, 0.0f, 1.0f);
 
 }
 
 //DRAW HEAD
 void Horse::set_head() {
-	head_model = neck_model;
+	/*head_model = neck_model;
 	head_model = glm::translate(head_model, horse_size*glm::vec3(-0.30f, 0.2f, 0.0f));
 	scale = glm::scale(glm::mat4(1.0f), horse_size* glm::vec3(0.20f, 0.50f, 0.35f));
 	head_model = glm::rotate(head_model, glm::radians(110.0f), glm::vec3(0.0f, 0.0f, 1.0f));
@@ -405,6 +425,13 @@ void Horse::set_head() {
 	glUniformMatrix4fv(glGetUniformLocation(*horse_shader, "model"), 1, GL_FALSE, glm::value_ptr(head_model));
 	glUniform4f(glGetUniformLocation(*horse_shader, "col"), 0.4f, 0.0941176470588235f, 0.0f, 1.0f);
 	Cube::draw();
-
+	*/
+	head->joint_loc = -horse_size*glm::vec3(0.0f, -0.25f, 0.0f);
+	//head->joint_loc = head->parent->joint_loc;
+	head->scale_matrix = glm::scale(glm::mat4(1.0f), horse_size*glm::vec3(0.20f, 0.50f, 0.35f));
+	head->model_matrix *= glm::translate(glm::mat4(1.0f), (horse_size*glm::vec3(0.0f,0.0f, 0.0f))); // move it according to world xyz, base position of it. 
+	head->translation_matrix = glm::translate(head->translation_matrix, horse_size*glm::vec3(0.00f, 1.3f, 0.0f));
+	head->rotation_matrix = glm::rotate(head->rotation_matrix, glm::radians( headrot.y), glm::vec3(0.0f, 0.0f, 1.0f));
+	head->color = glm::vec4(0.4f, 0.0941176470588235f, 0.0f, 1.0f);
 	
 }
