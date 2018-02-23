@@ -424,7 +424,7 @@ void Horse::set_head() {
 	glUniformMatrix4fv(glGetUniformLocation(*horse_shader, "scale"), 1, GL_FALSE, glm::value_ptr(scale));
 	glUniformMatrix4fv(glGetUniformLocation(*horse_shader, "model"), 1, GL_FALSE, glm::value_ptr(head_model));
 	glUniform4f(glGetUniformLocation(*horse_shader, "col"), 0.4f, 0.0941176470588235f, 0.0f, 1.0f);
-	Cube::draw();
+	Cube::draw(); 
 	*/
 	head->joint_loc = -horse_size*glm::vec3(0.0f, -.25f, 0.0f);
 	//head->joint_loc = head->parent->joint_loc;
