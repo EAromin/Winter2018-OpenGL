@@ -27,7 +27,15 @@ private:
 
 	void set_lower_left_hind_leg();
 	void set_lower_right_hind_leg();
-
+	//joints
+	glm::vec3 head_to_neck = glm::vec3(0.0f, -.25f, 0.0f);
+	glm::vec3 neck_to_torso = glm::vec3(.0f, -0.325f, 0.0f);
+	glm::vec3 torso_to_front_upper_right = glm::vec3(0.0f, -.25f, 0.0f);
+	glm::vec3 front_right_knee = glm::vec3(0.0f, -.25f, 0.0f);
+	//glm::vec3 torso_to_hind_upper_right = glm::vec3(0.0f, -.25f, 0.0f);
+	//glm::vec3 hind_right_knee = glm::vec3(0.0f, -.25f, 0.0f);
+	glm::vec3 torso_to_front_upper_left = glm::vec3(0.0f, -.25f, 0.0f);
+	glm::vec3 front_left_knee = glm::vec3(0.0f, -.25f, 0.0f);
 	//we use this for single press flags
 	bool w_press = false;
 	bool s_press = false;
@@ -66,13 +74,17 @@ public:
 	glm::vec3 headrot = glm::vec3(0.0f, 0.0f, 0.0f);
 	//upper parts
 	Part* upper_left_front_leg;
+	glm::vec3 ulfl = glm::vec3(0.0f, 0.0f, 0.0f);
 	Part* upper_right_front_leg;
+	glm::vec3 urfl = glm::vec3(0.0f, 0.0f, 0.0f);
 	Part* upper_left_hind_leg;
 	Part* upper_right_hind_leg;
 
 	//lower parts
 	Part* lower_left_front_leg;
+	glm::vec3 llfl = glm::vec3(0.0f, 0.0f, 0.0f);
 	Part* lower_right_front_leg;
+	glm::vec3 lrfl = glm::vec3(0.0f, 0.0f, 0.0f);
 	Part* lower_left_hind_leg;
 	Part* lower_right_hind_leg;
 	
