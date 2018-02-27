@@ -51,27 +51,8 @@ private:
 public:
 
 
-	//horse part models
 	glm::mat4 core_model; //anchor
 
-	glm::mat4 neck_model;
-	glm::mat4 head_model;
-
-	//upper parts
-	glm::mat4 upper_left_front_leg_model;
-	glm::mat4 upper_right_front_leg_model;
-
-	glm::mat4 upper_left_hind_leg_model;
-	glm::mat4 upper_right_hind_leg_model;
-
-	//lower parts
-	glm::mat4 lower_left_front_leg_model;
-	glm::mat4 lower_right_front_leg_model;
-
-	glm::mat4 lower_left_hind_leg_model;
-	glm::mat4 lower_right_hind_leg_model;
-
-	//remove upper part once done with making parts
 	//parts. vec3 after each one is their respective logs for rotations
 	Part* torso;
 
