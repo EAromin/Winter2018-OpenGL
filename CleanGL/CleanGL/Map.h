@@ -32,3 +32,16 @@ public:
 	static void set();
 	static void draw();
 };
+
+class Floor {
+
+public:
+	static GLuint *floor_shader;
+
+	static float floor_vertices[];
+	static void set(GLuint &shader);
+	static void draw();
+
+	static GLuint texture;
+	static GLuint  floorVBO, floorVAO;
+};
