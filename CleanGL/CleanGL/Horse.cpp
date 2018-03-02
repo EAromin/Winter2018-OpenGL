@@ -48,6 +48,20 @@ void Horse::draw()
 	lower_left_hind_leg= &CubicPart::CubicPart(*horse_shader,*upper_left_hind_leg);
 	set_lower_left_hind_leg();
 
+	if (Cube::tex_toggle) {
+		torso->color = glm::vec4(1.0f);
+		upper_left_hind_leg->color = glm::vec4(1.0f);
+		upper_right_hind_leg->color = glm::vec4(1.0f);
+		upper_left_front_leg->color = glm::vec4(1.0f);
+		upper_right_front_leg->color = glm::vec4(1.0f);
+		lower_left_hind_leg->color = glm::vec4(1.0f);
+		lower_right_hind_leg->color = glm::vec4(1.0f);
+		lower_left_front_leg->color = glm::vec4(1.0f);
+		lower_right_front_leg->color = glm::vec4(1.0f);
+		neck->color = glm::vec4(1.0f);
+		head->color = glm::vec4(1.0f);
+
+	}
 
 	torso->draw();
 

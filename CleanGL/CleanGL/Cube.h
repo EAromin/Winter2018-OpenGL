@@ -10,6 +10,7 @@ class Cube {
 private:
 	 
 public: 
+	static bool tex_toggle;
 	static GLuint VAO;
 	static GLuint VBO;
 	static GLuint texture;

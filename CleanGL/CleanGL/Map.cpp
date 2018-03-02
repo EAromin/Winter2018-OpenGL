@@ -137,6 +137,7 @@ GLuint *Floor::floor_shader = nullptr;
 GLuint Floor::texture = 0;
 GLuint Floor::floorVBO = 0;
 GLuint Floor::floorVAO = 0;
+bool Floor::tex_toggle = false;
 
 void Floor::set(GLuint &shader) {
 	floor_shader = &shader;
@@ -155,7 +156,7 @@ void Floor::set(GLuint &shader) {
 
 	//texture
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3*sizeof(float)));
-	//glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(1);
 
 	// ---------
 	glGenTextures(1, &texture);
@@ -191,16 +192,22 @@ void Floor::set(GLuint &shader) {
 };
 
 void Floor::draw() {
+	if (tex_toggle)
+		glEnableVertexAttribArray(1);
+	else
+		glDisableVertexAttribArray(1);
 
+	glBindVertexArray(floorVAO);
 	glUseProgram(*floor_shader);
 	glUniformMatrix4fv(glGetUniformLocation(*floor_shader, "model"), 1, GL_FALSE, glm::value_ptr(*Map::model_matrix));
 	glUniform4f(glGetUniformLocation(*Map::map_shader, "col"), 1.0f, 1.0f, 1.0f, 1.0f);
 
-	glBindVertexArray(floorVAO);
+	
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture);
-
-
 	glDrawArrays(GL_TRIANGLES, 0, sizeof(floor_vertices));
+
+	glDisableVertexAttribArray(1);
+
 }

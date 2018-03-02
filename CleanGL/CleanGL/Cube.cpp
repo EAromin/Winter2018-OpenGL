@@ -91,6 +91,7 @@ Cube::Cube()
 	
 
 }
+ bool Cube::tex_toggle = false;
  GLuint Cube::texture= 0;
  GLuint* Cube::shader = nullptr;
  GLuint Cube::VAO = 0;
@@ -105,11 +106,18 @@ void Cube::set()
 void Cube::draw()
 {
 	
+	if (tex_toggle)
+		glEnableVertexAttribArray(1);
+	else
+		glDisableVertexAttribArray(1);
 
 	glBindVertexArray(VAO);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glDrawArrays(GL_TRIANGLES, 0, sizeof(Cube::verticess));
+
+	glDisableVertexAttribArray(1);
+
 }
 
 void Cube::set_shader(GLuint &shdr)
@@ -120,7 +128,7 @@ void Cube::set_shader(GLuint &shdr)
 
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*Cube::vertices.size(), &Cube::vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*Cube::vertices.size(), &Cube::vertices[0], GL_STATIC_DRAW);
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Cube::verticess), &Cube::verticess[0], GL_STATIC_DRAW);
 
@@ -130,7 +138,7 @@ void Cube::set_shader(GLuint &shdr)
 	//text
 	//texture
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	//glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(1);
 
 
 	// ---------

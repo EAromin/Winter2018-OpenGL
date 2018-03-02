@@ -37,6 +37,7 @@ class Floor {
 
 public:
 	static GLuint *floor_shader;
+	static bool tex_toggle;
 
 	static float floor_vertices[];
 	static void set(GLuint &shader);
