@@ -155,7 +155,7 @@ void Floor::set(GLuint &shader) {
 
 	//texture
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3*sizeof(float)));
-	glEnableVertexAttribArray(1);
+	//glEnableVertexAttribArray(1);
 
 	// ---------
 	glGenTextures(1, &texture);
@@ -200,8 +200,7 @@ void Floor::draw() {
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture);
-	glEnableVertexAttribArray(1);
+
 
 	glDrawArrays(GL_TRIANGLES, 0, sizeof(floor_vertices));
-	glDisableVertexAttribArray(1);
 }
