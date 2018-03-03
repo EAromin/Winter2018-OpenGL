@@ -133,9 +133,21 @@ float Floor::floor_vertices[] = {
 
 
 };
+
+float Floor::floor_normals[] = {
+	0.0f, 1.0f, 0.0f,
+	0.0f, 1.0f, 0.0f,
+	0.0f, 1.0f, 0.0f,
+
+	0.0f, 1.0f, 0.0f,
+	0.0f, 1.0f, 0.0f,
+	0.0f, 1.0f, 0.0f
+};
 GLuint *Floor::floor_shader = nullptr;
 GLuint Floor::texture = 0;
 GLuint Floor::floorVBO = 0;
+GLuint Floor::floorVBO_norm = 0;
+
 GLuint Floor::floorVAO = 0;
 bool Floor::tex_toggle = false;
 
@@ -158,6 +170,12 @@ void Floor::set(GLuint &shader) {
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3*sizeof(float)));
 	glEnableVertexAttribArray(1);
 
+	//norms
+	glGenBuffers(1, &floorVBO_norm);
+	glBindBuffer(GL_ARRAY_BUFFER, floorVBO_norm);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Floor::floor_normals), &Floor::floor_normals[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(2);
 	// ---------
 	glGenTextures(1, &texture);
 	glActiveTexture(GL_TEXTURE0);

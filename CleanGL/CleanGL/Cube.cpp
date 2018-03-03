@@ -55,6 +55,52 @@ float Cube::verticess[] = {
 	0.5f,-0.5f,-0.5f,	0.0f, 1.0f,
 
 };
+
+float Cube::cube_normals[] = {
+	
+	0.0f,0.0f,1.0f,
+	0.0f,0.0f,1.0f,
+	0.0f,0.0f,1.0f,
+	0.0f,0.0f,1.0f,
+	0.0f,0.0f,1.0f,
+	0.0f,0.0f,1.0f,
+
+	0.0f,1.0f,0.0f,
+	0.0f,1.0f,0.0f,
+	0.0f,1.0f,0.0f,
+	0.0f,1.0f,0.0f,
+	0.0f,1.0f,0.0f,
+	0.0f,1.0f,0.0f,
+
+	-1.0f,0.0f,0.0f,
+	-1.0f,0.0f,0.0f,
+	-1.0f,0.0f,0.0f,
+	-1.0f,0.0f,0.0f,
+	-1.0f,0.0f,0.0f,
+	-1.0f,0.0f,0.0f,
+
+	0.0f,-1.0f,0.0f,
+	0.0f,-1.0f,0.0f,
+	0.0f,-1.0f,0.0f,
+	0.0f,-1.0f,0.0f,
+	0.0f,-1.0f,0.0f,
+	0.0f,-1.0f,0.0f,
+
+	1.0f,0.0f,0.0f,
+	1.0f,0.0f,0.0f,
+	1.0f,0.0f,0.0f,
+	1.0f,0.0f,0.0f,
+	1.0f,0.0f,0.0f,
+	1.0f,0.0f,0.0f,
+
+	0.0f,0.0f,-1.0f,
+	0.0f,0.0f,-1.0f,
+	0.0f,0.0f,-1.0f,
+	0.0f,0.0f,-1.0f,
+	0.0f,0.0f,-1.0f,
+	0.0f,0.0f,-1.0f
+
+};
 std::vector<glm::vec3> Cube::vertices = {
 	//front face
 	glm::vec3(-0.5f,-0.5f,0.5f),glm::vec3(0.5f,-0.5f,0.5f),
@@ -96,6 +142,8 @@ Cube::Cube()
  GLuint* Cube::shader = nullptr;
  GLuint Cube::VAO = 0;
  GLuint Cube::VBO = 0;
+ GLuint Cube::VBO_norm = 0;
+
 //sets vao vbo
 void Cube::set()
 {
@@ -128,8 +176,6 @@ void Cube::set_shader(GLuint &shdr)
 
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3)*Cube::vertices.size(), &Cube::vertices[0], GL_STATIC_DRAW);
-
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Cube::verticess), &Cube::verticess[0], GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
@@ -140,7 +186,11 @@ void Cube::set_shader(GLuint &shdr)
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-
+	glGenBuffers(1, &VBO_norm);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO_norm);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Cube::cube_normals), &Cube::cube_normals[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(2);
 	// ---------
 	glGenTextures(1, &texture);
 	glActiveTexture(GL_TEXTURE0);

@@ -13,9 +13,11 @@ public:
 	static bool tex_toggle;
 	static GLuint VAO;
 	static GLuint VBO;
+	static GLuint VBO_norm;
 	static GLuint texture;
 	static GLuint *shader;
 	static float verticess[];
+	static float cube_normals[];
 	static std::vector<glm::vec3> vertices;
 	Cube();
 	static void set();

@@ -40,9 +40,10 @@ public:
 	static bool tex_toggle;
 
 	static float floor_vertices[];
+	static float floor_normals[];
 	static void set(GLuint &shader);
 	static void draw();
 
 	static GLuint texture;
-	static GLuint  floorVBO, floorVAO;
+	static GLuint  floorVBO, floorVAO, floorVBO_norm;
 };
