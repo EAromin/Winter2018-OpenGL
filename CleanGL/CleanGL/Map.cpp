@@ -21,11 +21,11 @@ void Map::set_model(glm::mat4 &mm)
 void Map::draw()
 {
 	glUseProgram(*map_shader);
-
-	Grid::set();
-	Grid::draw();
 	Coordinates::set();
 	Coordinates::draw();
+	Grid::set();
+	Grid::draw();
+	
 	
 }
 
@@ -217,7 +217,7 @@ void Floor::draw() {
 
 	glBindVertexArray(floorVAO);
 	glUseProgram(*floor_shader);
-	glUniformMatrix4fv(glGetUniformLocation(*floor_shader, "model"), 1, GL_FALSE, glm::value_ptr(*Map::model_matrix));
+	glUniformMatrix4fv(glGetUniformLocation(*floor_shader, "model"), 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
 	glUniform4f(glGetUniformLocation(*Map::map_shader, "col"), 1.0f, 1.0f, 1.0f, 1.0f);
 
 	

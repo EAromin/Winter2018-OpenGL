@@ -4,6 +4,8 @@
 #include <stdlib.h>    
 #include <time.h> 
 #include <iostream>
+
+#define HORSE_ROTATION_LEVEL  20.0f
 void Horse::set_shader(GLuint & shader)
 {
 	horse_shader = &shader;
@@ -130,7 +132,7 @@ void Horse::horse_controller(GLFWwindow* window)
 	{
 		if (a_press) {
 			rotation = glm::translate(rotation, movement_log);
-			rotation = glm::rotate(rotation, glm::radians(5.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			rotation = glm::rotate(rotation, glm::radians(HORSE_ROTATION_LEVEL), glm::vec3(0.0f, 1.0f, 0.0f));
 			rotation = glm::translate(rotation, -movement_log);
 
 		}
@@ -146,7 +148,7 @@ void Horse::horse_controller(GLFWwindow* window)
 	{
 		if (d_press) {
 			rotation = glm::translate(rotation,movement_log);
-			rotation = glm::rotate(rotation, glm::radians(-5.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+			rotation = glm::rotate(rotation, glm::radians(-HORSE_ROTATION_LEVEL), glm::vec3(0.0f, 1.0f, 0.0f));
 			rotation = glm::translate(rotation, -movement_log);
 		}
 		d_press = false;
@@ -161,7 +163,7 @@ void Horse::horse_controller(GLFWwindow* window)
 	{
 		if (w_press) {
 			rotation = glm::translate(rotation, (movement_log + glm::vec3(0.0f,1.1f,0.0f)));
-			rotation = glm::rotate(rotation, glm::radians(-5.0f), glm::vec3(0.0f, 0.0f,1.0f));
+			rotation = glm::rotate(rotation, glm::radians(-HORSE_ROTATION_LEVEL), glm::vec3(0.0f, 0.0f,1.0f));
 			rotation = glm::translate(rotation, -(movement_log + glm::vec3(0.0f,1.1f,0.0f)));
 		}
 		w_press = false;
@@ -176,7 +178,7 @@ void Horse::horse_controller(GLFWwindow* window)
 	{
 		if (s_press) {
 			rotation = glm::translate(rotation, (movement_log + glm::vec3(0.0f,1.1f,0.0f)));
-			rotation = glm::rotate(rotation, glm::radians(5.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+			rotation = glm::rotate(rotation, glm::radians(HORSE_ROTATION_LEVEL), glm::vec3(0.0f, 0.0f, 1.0f));
 			rotation = glm::translate(rotation, -(movement_log + glm::vec3(0.0f,1.1f,0.0f)));
 		}
 		s_press = false;
@@ -211,55 +213,55 @@ void Horse::horse_controller(GLFWwindow* window)
 
 	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS))
 	{
-		neckrot.y -= 5.0f;
+		neckrot.y -= HORSE_ROTATION_LEVEL;
 	}else	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
-		neckrot.y += 5.0f;
+		neckrot.y += HORSE_ROTATION_LEVEL;
 
 	}
 	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS))
 	{
-		headrot.y -= 5.0f;
+		headrot.y -= HORSE_ROTATION_LEVEL;
 	}
 	else
 	if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS) {
-		headrot.y += 5.0f;
+		headrot.y += HORSE_ROTATION_LEVEL;
 
 
 	}if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS))
 	{
-		urfl.y -= 5.0f;
+		urfl.y -= HORSE_ROTATION_LEVEL;
 	}
 	else
 	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
-		urfl.y += 5.0f;
+		urfl.y += HORSE_ROTATION_LEVEL;
 
 
 	}if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS))
 	{
-		lrfl.y -= 5.0f;
+		lrfl.y -= HORSE_ROTATION_LEVEL;
 	}
 	else
 	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
-		lrfl.y += 5.0f;
+		lrfl.y += HORSE_ROTATION_LEVEL;
 
 
 	}
 		if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS))
 	{
-		urhl.y -= 5.0f;
+		urhl.y -= HORSE_ROTATION_LEVEL;
 	}
 	else
 	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
-		urhl.y += 5.0f;
+		urhl.y += HORSE_ROTATION_LEVEL;
 
 
 	}if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS))
 	{
-		lrhl.y -= 5.0f;
+		lrhl.y -= HORSE_ROTATION_LEVEL;
 	}
 	else
 	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS) {
-		lrhl.y += 5.0f;
+		lrhl.y += HORSE_ROTATION_LEVEL;
 
 
 	}
@@ -269,39 +271,39 @@ void Horse::horse_controller(GLFWwindow* window)
 
 		if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS))
 	{
-		ulfl.y -= 5.0f;
+		ulfl.y -= HORSE_ROTATION_LEVEL;
 	}
 	else
 	if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS) {
-		ulfl.y += 5.0f;
+		ulfl.y += HORSE_ROTATION_LEVEL;
 
 
 	}if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS))
 	{
-		llfl.y -= 5.0f;
+		llfl.y -= HORSE_ROTATION_LEVEL;
 	}
 	else
 	if (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS) {
-		llfl.y += 5.0f;
+		llfl.y += HORSE_ROTATION_LEVEL;
 
 
 	}
 		if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS))
 	{
-		ulhl.y -= 5.0f;
+		ulhl.y -= HORSE_ROTATION_LEVEL;
 	}
 	else
 	if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS) {
-		ulhl.y += 5.0f;
+		ulhl.y += HORSE_ROTATION_LEVEL;
 
 
 	}if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS))
 	{
-		llhl.y -= 5.0f;
+		llhl.y -= HORSE_ROTATION_LEVEL;
 	}
 	else
 	if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS) {
-		llhl.y += 5.0f;
+		llhl.y += HORSE_ROTATION_LEVEL;
 
 
 	}
@@ -310,7 +312,7 @@ void Horse::horse_controller(GLFWwindow* window)
 void Horse::set_core()
 {
 	core_model *= rotation;
-	core_model = glm::translate(core_model, movement_log + (horse_size* glm::vec3(0.0f, 1.1f, 0.0f)));
+	core_model = glm::translate(core_model, movement_log + (horse_size* glm::vec3(0.0f, 1.2f, 0.0f)));
 
 	torso->model_matrix = core_model;
 	torso->scale_matrix = glm::scale(glm::mat4(1.0f), horse_size*glm::vec3(1.0f, 0.60f, 0.40f));
