@@ -5,7 +5,8 @@
 #include <time.h> 
 #include <iostream>
 
-#define HORSE_ROTATION_LEVEL  20.0f
+#define HORSE_ROTATION_LEVEL  5.0f
+bool Horse::joints[10] = { false };
 void Horse::set_shader(GLuint & shader)
 {
 	horse_shader = &shader;
@@ -209,103 +210,254 @@ void Horse::horse_controller(GLFWwindow* window)
 		horse_size -= 0.01f;
 
 	}
+	//FOR DA JOINTS
+	joint_controller(window);
 
+}
+
+void Horse::joint_controller(GLFWwindow * window)
+{
+	
+	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS))
+	{
+		joints[0] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_0) == GLFW_RELEASE))
+	{
+		if (joints[0]) {
+			headrot.y -= HORSE_ROTATION_LEVEL;
+		}
+		joints[0] = false;
+	}
+
+
+	if ((glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS))
+	{
+		joints[0] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_0) == GLFW_RELEASE))
+	{
+		if (joints[0]) {
+			headrot.y += HORSE_ROTATION_LEVEL;
+		}
+		joints[0] = false;
+	}
 
 	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS))
 	{
-		neckrot.y -= HORSE_ROTATION_LEVEL;
-	}else	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
-		neckrot.y += HORSE_ROTATION_LEVEL;
-
+		joints[1] = true;
 	}
-	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS))
+	else if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_1) == GLFW_RELEASE))
 	{
-		headrot.y -= HORSE_ROTATION_LEVEL;
+		if (joints[1]) {
+			neckrot.y -= HORSE_ROTATION_LEVEL;
+		}
+		joints[1] = false;
 	}
-	else
-	if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS) {
-		headrot.y += HORSE_ROTATION_LEVEL;
 
 
-	}if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS))
+	if ((glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS))
 	{
-		urfl.y -= HORSE_ROTATION_LEVEL;
+		joints[1] = true;
 	}
-	else
-	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
-		urfl.y += HORSE_ROTATION_LEVEL;
-
-
-	}if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS))
+	else if ((glfwGetKey(window, GLFW_KEY_1) == GLFW_RELEASE))
 	{
-		lrfl.y -= HORSE_ROTATION_LEVEL;
+		if (joints[1]) {
+			neckrot.y += HORSE_ROTATION_LEVEL;
+		}
+		joints[1] = false;
 	}
-	else
-	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
-		lrfl.y += HORSE_ROTATION_LEVEL;
-
-
-	}
-		if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS))
+	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS))
 	{
-		urhl.y -= HORSE_ROTATION_LEVEL;
+		joints[2] = true;
 	}
-	else
-	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
-		urhl.y += HORSE_ROTATION_LEVEL;
-
-
-	}if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS))
+	else if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_2) == GLFW_RELEASE))
 	{
-		lrhl.y -= HORSE_ROTATION_LEVEL;
-	}
-	else
-	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS) {
-		lrhl.y += HORSE_ROTATION_LEVEL;
-
-
+		if (joints[2]) {
+			urfl.y -= HORSE_ROTATION_LEVEL;
+		}
+		joints[2] = false;
 	}
 
 
-
-
-		if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS))
+	if ((glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS))
 	{
-		ulfl.y -= HORSE_ROTATION_LEVEL;
+		joints[2] = true;
 	}
-	else
-	if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS) {
-		ulfl.y += HORSE_ROTATION_LEVEL;
-
-
-	}if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS))
+	else if ((glfwGetKey(window, GLFW_KEY_2) == GLFW_RELEASE))
 	{
-		llfl.y -= HORSE_ROTATION_LEVEL;
+		if (joints[2]) {
+			urfl.y += HORSE_ROTATION_LEVEL;
+		}
+		joints[2] = false;
 	}
-	else
-	if (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS) {
-		llfl.y += HORSE_ROTATION_LEVEL;
-
-
-	}
-		if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS))
+	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS))
 	{
-		ulhl.y -= HORSE_ROTATION_LEVEL;
+		joints[3] = true;
 	}
-	else
-	if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS) {
-		ulhl.y += HORSE_ROTATION_LEVEL;
-
-
-	}if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS))
+	else if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_3) == GLFW_RELEASE))
 	{
-		llhl.y -= HORSE_ROTATION_LEVEL;
+		if (joints[3]) {
+			lrfl.y -= HORSE_ROTATION_LEVEL;
+		}
+		joints[3] = false;
 	}
-	else
-	if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS) {
-		llhl.y += HORSE_ROTATION_LEVEL;
 
 
+	if ((glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS))
+	{
+		joints[3] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_3) == GLFW_RELEASE))
+	{
+		if (joints[3]) {
+			lrfl.y += HORSE_ROTATION_LEVEL;
+		}
+		joints[3] = false;
+	}
+	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS))
+	{
+		joints[4] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_4) == GLFW_RELEASE))
+	{
+		if (joints[4]) {
+			urhl.y -= HORSE_ROTATION_LEVEL;
+		}
+		joints[4] = false;
+	}
+
+
+	if ((glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS))
+	{
+		joints[4] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_4) == GLFW_RELEASE))
+	{
+		if (joints[4]) {
+			urhl.y += HORSE_ROTATION_LEVEL;
+		}
+		joints[4] = false;
+	}
+	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS))
+	{
+		joints[5] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_5) == GLFW_RELEASE))
+	{
+		if (joints[5]) {
+			lrhl.y -= HORSE_ROTATION_LEVEL;
+		}
+		joints[5] = false;
+	}
+
+
+	if ((glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS))
+	{
+		joints[5] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_5) == GLFW_RELEASE))
+	{
+		if (joints[5]) {
+			lrhl.y += HORSE_ROTATION_LEVEL;
+		}
+		joints[5] = false;
+	}
+	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS))
+	{
+		joints[6] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_6) == GLFW_RELEASE))
+	{
+		if (joints[6]) {
+			ulfl.y -= HORSE_ROTATION_LEVEL;
+		}
+		joints[6] = false;
+	}
+
+
+	if ((glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS))
+	{
+		joints[6] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_6) == GLFW_RELEASE))
+	{
+		if (joints[6]) {
+			ulfl.y += HORSE_ROTATION_LEVEL;
+		}
+		joints[6] = false;
+	}
+	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS))
+	{
+		joints[7] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_7) == GLFW_RELEASE))
+	{
+		if (joints[7]) {
+			llfl.y -= HORSE_ROTATION_LEVEL;
+		}
+		joints[7] = false;
+	}
+
+
+	if ((glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS))
+	{
+		joints[7] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_7) == GLFW_RELEASE))
+	{
+		if (joints[7]) {
+			llfl.y += HORSE_ROTATION_LEVEL;
+		}
+		joints[7] = false;
+	}
+	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS))
+	{
+		joints[8] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_8) == GLFW_RELEASE))
+	{
+		if (joints[8]) {
+			ulhl.y -= HORSE_ROTATION_LEVEL;
+		}
+		joints[8] = false;
+	}
+
+
+	if ((glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS))
+	{
+		joints[8] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_8) == GLFW_RELEASE))
+	{
+		if (joints[8]) {
+			ulhl.y += HORSE_ROTATION_LEVEL;
+		}
+		joints[8] = false;
+	}
+	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS))
+	{
+		joints[9] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_9) == GLFW_RELEASE))
+	{
+		if (joints[9]) {
+			llhl.y -= HORSE_ROTATION_LEVEL;
+		}
+		joints[9] = false;
+	}
+
+
+	if ((glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS))
+	{
+		joints[9] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_9) == GLFW_RELEASE))
+	{
+		if (joints[9]) {
+			llhl.y += HORSE_ROTATION_LEVEL;
+		}
+		joints[9] = false;
 	}
 }
 

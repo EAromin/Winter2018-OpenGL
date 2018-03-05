@@ -90,11 +90,13 @@ public:
 	glm::vec3 movement_log = glm::vec3(0.0f,0.0f,0.0f);
 	glm::mat4 rotation = glm::mat4(1.0f);
 	glm::mat4 scale;
-
+	static bool joints[10];
 	float horse_size = 1.0f;
 	GLuint *horse_shader;
 	void set_shader(GLuint &shader);
 	void set_model(glm::mat4 &model);
 	void draw();
 	void horse_controller(GLFWwindow* window);
+	void joint_controller(GLFWwindow* window);
+
 };
