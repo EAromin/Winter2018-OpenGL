@@ -23,7 +23,7 @@ uniform vec3 view_position;
 void main()
 {
 	vec3 lightColor = vec3(1.0f,1.0f,1.0f); //default is white
-    vec3 ambient = 0.3f * lightColor; //replace 0.2f with ambientIntensity
+    vec3 ambient = 0.25f * lightColor; //replace 0.2f with ambientIntensity
 	
    
    vec3 light_dir = normalize(light_position - frag_pos);
@@ -35,7 +35,7 @@ void main()
    vec3 diffuse = diffusal * lightColor;
 
    //specular
-   	float specularStrength = .5;
+   	float specularStrength = .75;
    	vec3 spec_light_dir = normalize(light_position - spec_frag_pos);
 	vec3 view_dir = normalize(view_position - spec_frag_pos);
 	vec3 reflect_dir = reflect(-spec_light_dir, normalize(spec_norm)); 
@@ -44,7 +44,7 @@ void main()
 	vec3 specular = specularStrength * spec * lightColor; 
 
    	//vec3 result = ambient * vec3(col.x,col.y,col.z);
-	//vec4 result = vec4(ambient + specular  +diffuse,1);
-	vec4 result = vec4(specular+ambient,1);
+	vec4 result = vec4(ambient + specular  +diffuse,1);
+	//vec4 result = vec4(specular+ambient,1);
     color = texture(theTexture,TexCoord) * result * col;
 } 
