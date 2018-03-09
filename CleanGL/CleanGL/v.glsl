@@ -25,7 +25,7 @@ void main()
 	norm = vec3(transpose(inverse(model)) * vec4(normal, 1.0f));
 	frag_pos = vec3(model * vec4(position, 1.0f));
 
-	spec_norm = vec3(transpose(inverse(view*model)) * vec4(normal, 1.0f));
+	spec_norm = vec3(transpose(inverse(projection*view)) * vec4(normal, 1.0f));
 	spec_frag_pos = vec3( (view*model)  *vec4(position, 1.0f));
 
 

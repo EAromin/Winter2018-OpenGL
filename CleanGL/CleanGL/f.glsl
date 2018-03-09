@@ -37,14 +37,14 @@ void main()
    //specular
    	float specularStrength = .5;
    	vec3 spec_light_dir = normalize(light_position - spec_frag_pos);
-	vec3 view_dir = normalize(-view_position - spec_frag_pos);
+	vec3 view_dir = normalize(view_position - spec_frag_pos);
 	vec3 reflect_dir = reflect(-spec_light_dir, normalize(spec_norm)); 
 
 	float spec = pow(max(dot(reflect_dir,view_dir), 0.0), 64);
 	vec3 specular = specularStrength * spec * lightColor; 
 
    	//vec3 result = ambient * vec3(col.x,col.y,col.z);
-	vec4 result = vec4(ambient + specular  +diffuse,1);
-
+	//vec4 result = vec4(ambient + specular  +diffuse,1);
+	vec4 result = vec4(specular+ambient,1);
     color = texture(theTexture,TexCoord) * result * col;
 } 
