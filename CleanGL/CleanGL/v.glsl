@@ -30,6 +30,6 @@ void main()
 	spec_norm = vec3(transpose(inverse(view*model)) * vec4(normal, 1.0f));
 	spec_frag_pos = vec3( (view*model)  * vec4(position, 1.0f));
 
-
+	frag_pos_light_space = (light_space * vec4(frag_pos,1.0));
 }
 
