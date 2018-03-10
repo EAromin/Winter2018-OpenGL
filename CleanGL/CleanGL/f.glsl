@@ -23,8 +23,8 @@ uniform vec3 view_position;
 void main()
 {
 	vec3 lightColor = vec3(1.0f,1.0f,1.0f); //default is white
-    vec3 ambient = 0.25f * lightColor; //replace 0.2f with ambientIntensity
-	
+    //vec3 ambient = 0.25f * lightColor; //replace 0.2f with ambientIntensity
+	vec3 ambient = ambientIntensity * lightColor;
    
    vec3 light_dir = normalize(light_position - frag_pos);
    vec3 normal = normalize(norm);

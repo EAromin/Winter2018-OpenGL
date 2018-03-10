@@ -20,7 +20,9 @@ void Map::set_model(glm::mat4 &mm)
 
 void Map::draw()
 {
-	glUseProgram(*map_shader);
+	//glUseProgram(*map_shader);
+	glUniformMatrix4fv(glGetUniformLocation(*Map::map_shader, "model"), 1, GL_FALSE, glm::value_ptr(*Map::model_matrix));
+
 	Coordinates::set();
 	Coordinates::draw();
 	Grid::set();
@@ -64,6 +66,10 @@ void Coordinates::set()
 
 void Coordinates::draw()
 {
+	*Map::model_matrix = glm::translate(*Map::model_matrix,glm::vec3(0.0f,0.05f,0.0f));
+	glUniformMatrix4fv(glGetUniformLocation(*Map::map_shader, "model"), 1, GL_FALSE, glm::value_ptr(*Map::model_matrix));
+	glUniform1f(glGetUniformLocation(*Map::map_shader, "ambientIntensity"), 1.0f);
+
 	glUniform4f(glGetUniformLocation(*Map::map_shader, "col"), 1.0f, 0.0f, 0.0f, 1.0f);
 	glDrawArrays(GL_LINES, 0, 2);
 
@@ -72,7 +78,9 @@ void Coordinates::draw()
 
 	glUniform4f(glGetUniformLocation(*Map::map_shader, "col"), 0.0f, 0.0f, 1.0f, 1.0f);
 	glDrawArrays(GL_LINES, 4, 2);
-	
+	*Map::model_matrix = glm::translate(*Map::model_matrix, glm::vec3(0.0f, -0.05f, 0.0f));
+	glUniformMatrix4fv(glGetUniformLocation(*Map::map_shader, "model"), 1, GL_FALSE, glm::value_ptr(*Map::model_matrix));
+
 }
 
 void Grid::set()
@@ -154,12 +162,40 @@ bool Floor::tex_toggle = false;
 void Floor::set(GLuint &shader) {
 	floor_shader = &shader;
 
+
+};
+
+void Floor::draw() {
+	glBindVertexArray(floorVAO);
+
+	if (tex_toggle)
+		glEnableVertexAttribArray(1);
+	else
+		glDisableVertexAttribArray(1);
+
+	//glUseProgram(*floor_shader);
+	glUniformMatrix4fv(glGetUniformLocation(*floor_shader, "model"), 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
+	glUniform4f(glGetUniformLocation(*floor_shader, "col"), 1.0f, 1.0f, 1.0f, 1.0f);
+
+	
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glDrawArrays(GL_TRIANGLES, 0, sizeof(floor_vertices));
+
+	glDisableVertexAttribArray(1);
+
+}
+
+void Floor::init() {
+	//glUseProgram(*floor_shader);
+
 	glGenVertexArrays(1, &floorVAO);
 	glGenBuffers(1, &floorVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, floorVBO);
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(floor_vertices), floor_vertices, GL_STATIC_DRAW);
-	
+
 	glBindVertexArray(floorVAO);
 
 	//coordinates
@@ -167,7 +203,7 @@ void Floor::set(GLuint &shader) {
 	glEnableVertexAttribArray(0);
 
 	//texture
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3*sizeof(float)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
 	//norms
@@ -204,28 +240,5 @@ void Floor::set(GLuint &shader) {
 
 	stbi_image_free(data);
 
-	glUseProgram(*floor_shader);
 	glUniform1i(glGetUniformLocation(*floor_shader, "theTexture"), 0);
-
-};
-
-void Floor::draw() {
-	if (tex_toggle)
-		glEnableVertexAttribArray(1);
-	else
-		glDisableVertexAttribArray(1);
-
-	glBindVertexArray(floorVAO);
-	glUseProgram(*floor_shader);
-	glUniformMatrix4fv(glGetUniformLocation(*floor_shader, "model"), 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
-	glUniform4f(glGetUniformLocation(*Map::map_shader, "col"), 1.0f, 1.0f, 1.0f, 1.0f);
-
-	
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glDrawArrays(GL_TRIANGLES, 0, sizeof(floor_vertices));
-
-	glDisableVertexAttribArray(1);
-
 }

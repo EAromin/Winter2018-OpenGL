@@ -23,4 +23,5 @@ public:
 	static void set();
 	static void draw();
 	static void set_shader(GLuint &shdr);
+	static void init();
 };

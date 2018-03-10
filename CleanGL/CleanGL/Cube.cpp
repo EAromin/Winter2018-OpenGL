@@ -3,6 +3,12 @@
 #include <vector>
 #include <iostream>
 
+bool Cube::tex_toggle = false;
+GLuint Cube::texture = 0;
+GLuint* Cube::shader = nullptr;
+GLuint Cube::VAO = 0;
+GLuint Cube::VBO = 0;
+GLuint Cube::VBO_norm = 0;
 
 
 float Cube::verticess[] = {
@@ -137,12 +143,6 @@ Cube::Cube()
 	
 
 }
- bool Cube::tex_toggle = false;
- GLuint Cube::texture= 0;
- GLuint* Cube::shader = nullptr;
- GLuint Cube::VAO = 0;
- GLuint Cube::VBO = 0;
- GLuint Cube::VBO_norm = 0;
 
 //sets vao vbo
 void Cube::set()
@@ -150,27 +150,8 @@ void Cube::set()
 
 
 }
-
-void Cube::draw()
-{
-	
-	if (tex_toggle)
-		glEnableVertexAttribArray(1);
-	else
-		glDisableVertexAttribArray(1);
-
-	glBindVertexArray(VAO);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glDrawArrays(GL_TRIANGLES, 0, sizeof(Cube::verticess));
-
-	glDisableVertexAttribArray(1);
-
-}
-
-void Cube::set_shader(GLuint &shdr)
-{
-	shader = &shdr;
+void Cube::init() {
+	//glUseProgram(*shader);
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
@@ -216,9 +197,30 @@ void Cube::set_shader(GLuint &shdr)
 	{
 		std::cout << "Failed to load texture 1" << std::endl;
 	}
+	glUniform1i(glGetUniformLocation(*shader, "theTexture"), 0);
 
 	stbi_image_free(data);
+}
+void Cube::draw()
+{
+	glBindVertexArray(VAO);
 
-	glUseProgram(*shader);
-	glUniform1i(glGetUniformLocation(*shader, "theTexture"), 0);
+	if (tex_toggle)
+		glEnableVertexAttribArray(1);
+	else
+		glDisableVertexAttribArray(1);
+
+	
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glDrawArrays(GL_TRIANGLES, 0, sizeof(Cube::verticess));
+
+	glDisableVertexAttribArray(1);
+
+}
+
+void Cube::set_shader(GLuint &shdr)
+{
+	shader = &shdr;
+
 }

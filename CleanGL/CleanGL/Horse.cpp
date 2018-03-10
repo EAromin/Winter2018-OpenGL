@@ -19,7 +19,7 @@ void Horse::set_model(glm::mat4 &model)
 
 void Horse::draw()
 {
-	glUseProgram(*horse_shader);
+	//glUseProgram(*horse_shader);
 
 	Cube::set(); //unit to draw
 	torso = &CubicPart::CubicPart(*horse_shader);

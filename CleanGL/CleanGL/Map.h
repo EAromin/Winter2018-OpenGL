@@ -42,6 +42,7 @@ public:
 	static float floor_vertices[];
 	static float floor_normals[];
 	static void set(GLuint &shader);
+	static void init();
 	static void draw();
 
 	static GLuint texture;
