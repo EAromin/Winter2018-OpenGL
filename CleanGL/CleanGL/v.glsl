@@ -11,11 +11,13 @@ out vec3 frag_pos;
 
 out vec3 spec_norm;
 out vec3 spec_frag_pos;
+out vec4 frag_pos_light_space;
 
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 uniform mat4 scale;
+uniform mat4 light_space;
 void main()
 {
 	gl_Position = projection * view * model * scale * vec4(position, 1.0f) ;	

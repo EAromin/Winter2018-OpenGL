@@ -8,7 +8,7 @@ in vec3 frag_pos;
 in vec3 spec_norm;
 in vec3 spec_frag_pos;
 
-
+in vec4 frag_pos_light_space;
 
 out vec4 color;
 
