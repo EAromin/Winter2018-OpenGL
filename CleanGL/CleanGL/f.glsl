@@ -12,6 +12,7 @@ in vec4 frag_pos_light_space;
 
 out vec4 color;
 
+uniform int shadowtoggle; 
 
 uniform sampler2D theTexture;
 uniform sampler2D shadowMap;
@@ -55,8 +56,9 @@ float ShadowCalculation(vec4 fragPosLightSpace)
 
     // check whether current frag pos is in shadow
    // float shadow = currentDepth > closestDepth  ? 1.0 : 0.0;
-
-    return shadow;
+   if(shadowtoggle == 0)
+	shadow = 0.0;
+   return shadow;
 }
 
 void main()
