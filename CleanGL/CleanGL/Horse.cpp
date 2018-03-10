@@ -464,7 +464,9 @@ void Horse::joint_controller(GLFWwindow * window)
 void Horse::set_core()
 {
 	core_model *= rotation;
+
 	core_model = glm::translate(core_model, movement_log + (horse_size* glm::vec3(0.0f, 1.2f, 0.0f)));
+
 
 	torso->model_matrix = core_model;
 	torso->scale_matrix = glm::scale(glm::mat4(1.0f), horse_size*glm::vec3(1.0f, 0.60f, 0.40f));
