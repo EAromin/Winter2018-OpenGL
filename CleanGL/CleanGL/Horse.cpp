@@ -102,7 +102,9 @@ void Horse::gallop() {
 	}
 	 frame = ((int)(glfwGetTime()*15)) % 10;
 	switch (frame) {
+		
 	case 1: {
+
 		neckrot.y = 45;
 		headrot.y = 0;
 		ulfl.y = 65;
@@ -118,6 +120,7 @@ void Horse::gallop() {
 	}
 			break;
 	case 2: {
+
 		neckrot.y = 45;
 		headrot.y = 0;
 		ulfl.y = 60;
@@ -131,6 +134,7 @@ void Horse::gallop() {
 	}			break;
 
 	case 3: {
+		
 		neckrot.y = 45;
 		headrot.y = -15;
 		ulfl.y = 55;
@@ -144,6 +148,7 @@ void Horse::gallop() {
 	}			break;
 
 	case 4: {
+
 		neckrot.y = 55;
 		headrot.y = 0;
 		ulfl.y = 60;
@@ -157,6 +162,7 @@ void Horse::gallop() {
 	}			break;
 
 	case 5: {
+		
 		neckrot.y = 65;
 		headrot.y = 5;
 		ulfl.y = 70;
@@ -170,6 +176,7 @@ void Horse::gallop() {
 	}			break;
 
 	case 6: {
+		
 		neckrot.y = 60;
 		headrot.y = -10;
 		ulfl.y = 80;
@@ -183,6 +190,7 @@ void Horse::gallop() {
 	}			break;
 
 	case 7: {
+		
 		neckrot.y = 50;
 		headrot.y = -35;
 		ulfl.y = 90;
@@ -192,10 +200,11 @@ void Horse::gallop() {
 		llfl.y = -15;
 		lrfl.y = -20;
 		llhl.y = 5;
-		lrhl.y = 5;
+		 lrhl.y = 5;
 	}			break;
 
 	case 8: {
+
 		neckrot.y = 55;
 		headrot.y = -15;
 		ulfl.y = 80;
@@ -209,6 +218,7 @@ void Horse::gallop() {
 	}			break;
 
 	case 9: {
+
 		neckrot.y = 70;
 		headrot.y = 0;
 		ulfl.y = 75;
