@@ -15,6 +15,30 @@ glfw
 learnopengl.com
 Teacher Slides
 
+
+
+=====================================================
+ASSIGNMENT 2 STUFF
+======================================================
+KEYBINDING, SAME AS THE ONES IN LECTURE NOTES
+
+
+https://github.com/nothings/stb/blob/master/stb_image.h
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /////////////////////////////////////////////////////////////////////////////
 KEYBINDINGS
 

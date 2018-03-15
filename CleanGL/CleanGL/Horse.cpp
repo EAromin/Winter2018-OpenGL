@@ -6,7 +6,7 @@
 #include <iostream>
 
 #define HORSE_ROTATION_LEVEL  5.0f
-bool Horse::joints[10] = { false };
+bool Horse::joints[11] = { false };
 void Horse::set_shader(GLuint & shader)
 {
 	horse_shader = &shader;
@@ -65,12 +65,166 @@ void Horse::draw()
 		head->color = glm::vec4(1.0f);
 
 	}
+	
+
 
 	torso->draw();
-
-
+if (run_toggle)
+	gallop();
+else
+	stop_gallop();
 }
+void Horse::stop_gallop() {
+	if (upright)
+	{
+		rotation = glm::rotate(rotation, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		movement_log.x += 2;
+		neckrot.y = 0;
+		headrot.y = 0;
+		ulfl.y = 0;
+		urfl.y = 0;
+		ulhl.y = 0;
+		urhl.y = 0;
+		llfl.y = 0;
+		lrfl.y = 0;
+		llhl.y = 0;
+		lrhl.y = 0;
+		upright = false;
+	}
+}
+void Horse::gallop() {
+	if (!upright) {
+		rotation = glm::rotate(rotation, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		movement_log.x-=2;
 
+		upright = true;
+
+	}
+	 frame = ((int)(glfwGetTime()*10)) % 10;
+	switch (frame) {
+	case 1: {
+		neckrot.y = 45;
+		headrot.y = 0;
+		ulfl.y = 65;
+		urfl.y = 100;
+		ulhl.y = 95;
+		urhl.y = 70;
+		llfl.y = -15;
+		lrfl.y = -20;
+		llhl.y = 15;
+		lrhl.y = 5;
+
+
+	}
+			break;
+	case 2: {
+		neckrot.y = 45;
+		headrot.y = 0;
+		ulfl.y = 60;
+		urfl.y = 105;
+		ulhl.y = 100;
+		urhl.y = 65;
+		llfl.y = -15;
+		lrfl.y = -20;
+		llhl.y = 15;
+		lrhl.y = 5;
+	}			break;
+
+	case 3: {
+		neckrot.y = 45;
+		headrot.y = -15;
+		ulfl.y = 55;
+		urfl.y = 110;
+		ulhl.y = 105;
+		urhl.y = 60;
+		llfl.y = -15;
+		lrfl.y = -20;
+		llhl.y = 15;
+		lrhl.y = 5;
+	}			break;
+
+	case 4: {
+		neckrot.y = 55;
+		headrot.y = 0;
+		ulfl.y = 60;
+		urfl.y = 105;
+		ulhl.y = 100;
+		urhl.y = 65;
+		llfl.y = -15;
+		lrfl.y = -20;
+		llhl.y = 20;
+		lrhl.y = 5;
+	}			break;
+
+	case 5: {
+		neckrot.y = 65;
+		headrot.y = 5;
+		ulfl.y = 70;
+		urfl.y = 95;
+		ulhl.y = 90;
+		urhl.y = 75;
+		llfl.y = -15;
+		lrfl.y = -20;
+		llhl.y = 20;
+		lrhl.y = 5;
+	}			break;
+
+	case 6: {
+		neckrot.y = 60;
+		headrot.y = -10;
+		ulfl.y = 80;
+		urfl.y = 85;
+		ulhl.y = 80;
+		urhl.y = 85;
+		llfl.y = -15;
+		lrfl.y = -25;
+		llhl.y = 25;
+		lrhl.y = 5;
+	}			break;
+
+	case 7: {
+		neckrot.y = 50;
+		headrot.y = -35;
+		ulfl.y = 90;
+		urfl.y = 75;
+		ulhl.y = 70;
+		urhl.y = 95;
+		llfl.y = -15;
+		lrfl.y = -20;
+		llhl.y = 5;
+		lrhl.y = 5;
+	}			break;
+
+	case 8: {
+		neckrot.y = 55;
+		headrot.y = -15;
+		ulfl.y = 80;
+		urfl.y = 85;
+		ulhl.y = 80;
+		urhl.y = 85;
+		llfl.y = -15;
+		lrfl.y = -20;
+		llhl.y = 5;
+		lrhl.y = 5;
+	}			break;
+
+	case 9: {
+		neckrot.y = 70;
+		headrot.y = 0;
+		ulfl.y = 75;
+		urfl.y = 105;
+		ulhl.y = 95;
+		urhl.y = 80;
+		llfl.y = -15;
+		lrfl.y = -20;
+		llhl.y = 10;
+		lrhl.y = 5;
+	}			break;
+
+			std::cout << frame << std::endl;
+}
+//	std::cout << "Frame : " << frame << std::endl;
+}
 void Horse::horse_controller(GLFWwindow* window)
 {
 	//move forward
@@ -217,6 +371,21 @@ void Horse::horse_controller(GLFWwindow* window)
 
 void Horse::joint_controller(GLFWwindow * window)
 {
+	if ((glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS))
+	{
+		joints[10] = true;
+	}
+	else if ((glfwGetKey(window, GLFW_KEY_R) == GLFW_RELEASE))
+	{
+		if (joints[10]) {
+			debug_anim();
+			if (run_toggle)
+				run_toggle = false;
+			else
+				run_toggle = true;
+		}
+		joints[10] = false;
+	}
 	
 	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS))
 	{
@@ -459,6 +628,24 @@ void Horse::joint_controller(GLFWwindow * window)
 		}
 		joints[9] = false;
 	}
+}
+
+void Horse::debug_anim()
+{
+	std::cout << " =====================================" << std::endl;
+	std::cout << "neckrot.y=" << neckrot.y << ";" << std::endl;
+	std::cout << "headrot.y=" << headrot.y << ";" << std::endl;
+	std::cout << "ulfl.y=" << ulfl.y << ";" << std::endl;
+	std::cout << "urfl.y=" << urfl.y << ";" << std::endl;
+	std::cout << "ulhl.y=" << ulhl.y << ";" << std::endl;
+	std::cout << "urhl.y=" << urhl.y << ";" << std::endl;
+	std::cout << "llfl.y=" << llfl.y << ";" << std::endl;
+	std::cout << "lrfl.y=" << lrfl.y << ";" << std::endl;
+	std::cout << "llhl.y=" << llhl.y << ";" << std::endl;
+	std::cout << "lrhl.y=" << lrhl.y << ";" << std::endl;
+	std::cout << " =====================================" << std::endl;
+
+
 }
 
 void Horse::set_core()

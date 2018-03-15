@@ -11,6 +11,8 @@
 
 class Horse {
 private:
+	int frame;
+	void debug_anim();
 	void set_core();
 
 	void set_neck();
@@ -48,9 +50,11 @@ private:
 	bool a_press = false;
 	bool d_press = false;
 	bool space_press = false;
+	bool upright = false;
+	bool run_toggle = false;
 public:
-
-
+	void gallop();
+	void stop_gallop();
 	glm::mat4 core_model; //anchor
 
 	//parts. vec3 after each one is their respective logs for rotations
@@ -90,7 +94,7 @@ public:
 	glm::vec3 movement_log = glm::vec3(0.0f,0.0f,0.0f);
 	glm::mat4 rotation = glm::mat4(1.0f);
 	glm::mat4 scale;
-	static bool joints[10];
+	static bool joints[11];
 	float horse_size = 1.0f;
 	GLuint *horse_shader;
 	void set_shader(GLuint &shader);
