@@ -100,7 +100,7 @@ void Horse::gallop() {
 		upright = true;
 
 	}
-	 frame = ((int)(glfwGetTime()*10)) % 10;
+	 frame = ((int)(glfwGetTime()*15)) % 10;
 	switch (frame) {
 	case 1: {
 		neckrot.y = 45;
