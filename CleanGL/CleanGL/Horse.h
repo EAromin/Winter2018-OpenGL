@@ -94,13 +94,24 @@ public:
 	glm::vec3 movement_log = glm::vec3(0.0f,0.0f,0.0f);
 	glm::mat4 rotation = glm::mat4(1.0f);
 	glm::mat4 scale;
-	static bool joints[11];
+	 bool joints[11];
 	float horse_size = 1.0f;
 	GLuint *horse_shader;
+	Horse();
 	void set_shader(GLuint &shader);
 	void set_model(glm::mat4 &model);
 	void draw();
 	void horse_controller(GLFWwindow* window);
 	void joint_controller(GLFWwindow* window);
+/////////////////////////////////////////////////////////////////////////////
+	void turn_right(float angle);
+	void turn_left(float angle);
+	void tilt_up(float angle);
+	void tilt_down(float angle);
+
+	void move_forward(float distance);
+	void move_backward(float distance);
+	void move_right(float distance);
+	void move_left(float distance);
 
 };

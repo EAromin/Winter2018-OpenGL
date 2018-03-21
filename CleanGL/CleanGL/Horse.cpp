@@ -6,7 +6,9 @@
 #include <iostream>
 
 #define HORSE_ROTATION_LEVEL  5.0f
-bool Horse::joints[11] = { false };
+ Horse::Horse() {
+	joints[11] = { false };
+}
 void Horse::set_shader(GLuint & shader)
 {
 	horse_shader = &shader;
