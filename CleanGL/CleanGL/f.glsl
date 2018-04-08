@@ -71,9 +71,10 @@ void main()
    vec3 normal = normalize(norm);
 
    //diffuse readying
+   float diffuseintensity = .75f;
    float angle = dot(normal,light_dir);
    float diffusal = max(angle, 0.0);
-   vec3 diffuse = diffusal * lightColor;
+   vec3 diffuse = diffuseintensity*diffusal * lightColor;
 
    //specular
    	float specularStrength = .75;

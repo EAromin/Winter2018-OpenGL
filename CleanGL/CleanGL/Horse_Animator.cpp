@@ -11,3 +11,7 @@ Horse_Animator::Horse_Animator(Horse &horsie)
 {
 	my_horse = &horsie;
 }
+
+Horse_Animator::Horse_Animator()
+{
+}

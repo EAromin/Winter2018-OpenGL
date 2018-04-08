@@ -9,4 +9,5 @@ private:
 public:
 	int flip_coin();
 	Horse_Animator(Horse &horsie);
+	Horse_Animator();
 };

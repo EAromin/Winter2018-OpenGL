@@ -216,11 +216,15 @@ void Cube::draw()
 	glDrawArrays(GL_TRIANGLES, 0, sizeof(Cube::verticess));
 
 	glDisableVertexAttribArray(1);
-
+	
 }
 
 void Cube::set_shader(GLuint &shdr)
 {
 	shader = &shdr;
 
+}
+void Cube::release() {
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &VBO_norm);
 }

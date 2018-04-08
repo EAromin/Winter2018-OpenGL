@@ -6,9 +6,15 @@
 #include <iostream>
 
 #define HORSE_ROTATION_LEVEL  5.0f
+GLuint *Horse::horse_shader = nullptr;
  Horse::Horse() {
 	joints[11] = { false };
 }
+ Horse::Horse(float x, float y, float z) {
+	 joints[11] = { false };
+	 movement_log = glm::vec3(x,y,z);
+ }
+
 void Horse::set_shader(GLuint & shader)
 {
 	horse_shader = &shader;
@@ -17,42 +23,47 @@ void Horse::set_shader(GLuint & shader)
 void Horse::set_model(glm::mat4 &model)
 {
 	core_model = model;
+	
 }
-
+void Horse::ready() {
+	
+}
 void Horse::draw()
 {
 	//glUseProgram(*horse_shader);
 
 	Cube::set(); //unit to draw
+
+
+	ready();
 	torso = &CubicPart::CubicPart(*horse_shader);
 	set_core();
 
 	neck = &CubicPart::CubicPart(*horse_shader, *torso);
 	set_neck();
 
-	head = &CubicPart::CubicPart(*horse_shader,*neck);
+	head = &CubicPart::CubicPart(*horse_shader, *neck);
 	set_head();
 
 	//uppers
-	upper_right_front_leg= &CubicPart::CubicPart(*horse_shader,*torso);
+	upper_right_front_leg = &CubicPart::CubicPart(*horse_shader, *torso);
 	set_upper_right_front_leg();
-	upper_right_hind_leg = &CubicPart::CubicPart(*horse_shader,*torso);
+	upper_right_hind_leg = &CubicPart::CubicPart(*horse_shader, *torso);
 	set_upper_right_hind_leg();
 
-	upper_left_front_leg= &CubicPart::CubicPart(*horse_shader,*torso);
+	upper_left_front_leg = &CubicPart::CubicPart(*horse_shader, *torso);
 	set_upper_left_front_leg();
-	upper_left_hind_leg= &CubicPart::CubicPart(*horse_shader,*torso);
+	upper_left_hind_leg = &CubicPart::CubicPart(*horse_shader, *torso);
 	set_upper_left_hind_leg();
 	//lowers
-	lower_left_front_leg= &CubicPart::CubicPart(*horse_shader,*upper_left_front_leg);
+	lower_left_front_leg = &CubicPart::CubicPart(*horse_shader, *upper_left_front_leg);
 	set_lower_left_front_leg();
-	lower_right_hind_leg = &CubicPart::CubicPart(*horse_shader,*upper_right_hind_leg);
+	lower_right_hind_leg = &CubicPart::CubicPart(*horse_shader, *upper_right_hind_leg);
 	set_lower_right_hind_leg();
-	lower_right_front_leg= &CubicPart::CubicPart(*horse_shader, *upper_right_front_leg);
+	lower_right_front_leg = &CubicPart::CubicPart(*horse_shader, *upper_right_front_leg);
 	set_lower_right_front_leg();
-	lower_left_hind_leg= &CubicPart::CubicPart(*horse_shader,*upper_left_hind_leg);
+	lower_left_hind_leg = &CubicPart::CubicPart(*horse_shader, *upper_left_hind_leg);
 	set_lower_left_hind_leg();
-
 	if (Cube::tex_toggle) {
 		torso->color = glm::vec4(1.0f);
 		upper_left_hind_leg->color = glm::vec4(1.0f);
@@ -69,12 +80,12 @@ void Horse::draw()
 	}
 	
 
-
 	torso->draw();
 if (run_toggle)
 	gallop();
 else
 	stop_gallop();
+
 }
 void Horse::stop_gallop() {
 	if (upright)
@@ -390,13 +401,16 @@ void Horse::joint_controller(GLFWwindow * window)
 	else if ((glfwGetKey(window, GLFW_KEY_R) == GLFW_RELEASE))
 	{
 		if (joints[10]) {
-			debug_anim();
 			if (run_toggle)
 				run_toggle = false;
 			else
 				run_toggle = true;
 		}
 		joints[10] = false;
+	}
+	if ((glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS))
+	{
+		std::cout << "("<<movement_log.x<<", "<<movement_log.z<<")" << std::endl;
 	}
 	
 	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS))

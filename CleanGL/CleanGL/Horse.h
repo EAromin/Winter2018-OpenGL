@@ -58,7 +58,7 @@ public:
 	glm::mat4 core_model; //anchor
 
 	//parts. vec3 after each one is their respective logs for rotations
-	Part* torso;
+	Part* torso ;
 
 	Part* neck;
 	glm::vec3 neckrot = glm::vec3(0.0f,0.0f, 0.0f);
@@ -96,11 +96,13 @@ public:
 	glm::mat4 scale;
 	 bool joints[11];
 	float horse_size = 1.0f;
-	GLuint *horse_shader;
+	static	GLuint *horse_shader;
 	Horse();
-	void set_shader(GLuint &shader);
+	Horse(float x, float y, float z);
+	static void set_shader(GLuint &shader);
 	void set_model(glm::mat4 &model);
 	void draw();
+	void ready();
 	void horse_controller(GLFWwindow* window);
 	void joint_controller(GLFWwindow* window);
 /////////////////////////////////////////////////////////////////////////////
