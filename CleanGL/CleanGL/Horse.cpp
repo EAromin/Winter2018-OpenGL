@@ -90,8 +90,10 @@ else
 void Horse::stop_gallop() {
 	if (upright)
 	{
-		rotation = glm::rotate(rotation, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-		movement_log.x += 2;
+		rotation = glm::translate(rotation, movement_log + glm::vec3(0.f, 1.3f, 0));
+		rotation *= glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		rotation = glm::translate(rotation, -(movement_log + glm::vec3(0.f, 1.3f, 0)));
+		
 		neckrot.y = 0;
 		headrot.y = 0;
 		ulfl.y = 0;
@@ -107,8 +109,9 @@ void Horse::stop_gallop() {
 }
 void Horse::gallop() {
 	if (!upright) {
-		rotation = glm::rotate(rotation, glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-		movement_log.x-=2;
+		rotation = glm::translate(rotation,movement_log + glm::vec3(0.f, 1.3f,0));
+		rotation *= glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		rotation = glm::translate(rotation, -(movement_log + glm::vec3(0.f, 1.3f, 0)));
 
 		upright = true;
 

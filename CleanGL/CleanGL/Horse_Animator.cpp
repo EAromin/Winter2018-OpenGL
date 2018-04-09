@@ -10,8 +10,15 @@ int Horse_Animator::flip_coin()
 Horse_Animator::Horse_Animator(Horse &horsie)
 {
 	my_horse = &horsie;
+	old_tick = 0;
+	current_tick = 0;
 }
 
 Horse_Animator::Horse_Animator()
 {
+	old_tick = 0;
+	current_tick = 0;
+}
+void walko(){
+
 }
