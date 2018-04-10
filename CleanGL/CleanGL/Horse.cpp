@@ -4,7 +4,7 @@
 #include <stdlib.h>    
 #include <time.h> 
 #include <iostream>
-
+#include <string>
 #define HORSE_ROTATION_LEVEL  5.0f
 GLuint *Horse::horse_shader = nullptr;
  Horse::Horse() {
@@ -262,6 +262,8 @@ void Horse::horse_controller(GLFWwindow* window)
 	{
 		if (w_press) {
 			movement_log.x--;
+	
+			std::cout <<"("<< std::to_string(get_absolute_position().x)<< ", " << std::to_string(get_absolute_position().y) << ", " << std::to_string(get_absolute_position().z) <<")"<< std::endl;
 
 		}
 		w_press = false;
@@ -657,6 +659,12 @@ void Horse::joint_controller(GLFWwindow * window)
 		}
 		joints[9] = false;
 	}
+}
+
+glm::vec3 Horse::get_absolute_position()
+{
+
+	return glm::vec3(core_model[3][0], core_model[3][1], core_model[3][2]);
 }
 
 void Horse::debug_anim()

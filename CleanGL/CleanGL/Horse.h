@@ -106,5 +106,5 @@ public:
 	void horse_controller(GLFWwindow* window);
 	void joint_controller(GLFWwindow* window);
 
-
+	glm::vec3 get_absolute_position();
 };
