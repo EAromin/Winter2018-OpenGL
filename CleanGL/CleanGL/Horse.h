@@ -105,15 +105,6 @@ public:
 	void ready();
 	void horse_controller(GLFWwindow* window);
 	void joint_controller(GLFWwindow* window);
-/////////////////////////////////////////////////////////////////////////////
-	void turn_right(float angle);
-	void turn_left(float angle);
-	void tilt_up(float angle);
-	void tilt_down(float angle);
 
-	void move_forward(float distance);
-	void move_backward(float distance);
-	void move_right(float distance);
-	void move_left(float distance);
 
 };

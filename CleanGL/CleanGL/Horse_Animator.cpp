@@ -1,24 +1,259 @@
 #include "stdafx.h"
 #include "Horse_Animator.h"
 
+char Horse_Animator::possible_states[] = { '@',//default
+'s',//stroll
+'c',//choose direction
+};
 int Horse_Animator::flip_coin()
 {
 	int temp = rand() % 2;
 	return temp;
 }
 
-Horse_Animator::Horse_Animator(Horse &horsie)
+Horse_Animator::Horse_Animator(Horse &horsie,  float angle)
 {
 	my_horse = &horsie;
 	old_tick = 0;
 	current_tick = 0;
+	frame = 0;
+	frame_stop = 0;
+	upright = false;
+	state = '@';
+	my_horse->rotation = glm::rotate(my_horse->rotation, glm::radians(angle), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 Horse_Animator::Horse_Animator()
 {
 	old_tick = 0;
 	current_tick = 0;
-}
-void walko(){
+	frame = 0;
+	frame_stop = 0;
+	upright = false;
+	state = '@';
 
+}
+void Horse_Animator::stoppo() {
+	if (upright)
+	{
+		my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log + glm::vec3(0.f, 1.3f, 0));
+		my_horse->rotation *= glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		my_horse->rotation = glm::translate(my_horse->rotation, -(my_horse->movement_log + glm::vec3(0.f, 1.3f, 0)));
+
+		my_horse->neckrot.y = 0;
+		my_horse->headrot.y = 0;
+		my_horse->ulfl.y = 0;
+		my_horse->urfl.y = 0;
+		my_horse->ulhl.y = 0;
+		my_horse->urhl.y = 0;
+		my_horse->llfl.y = 0;
+		my_horse->lrfl.y = 0;
+		my_horse->llhl.y = 0;
+		my_horse->lrhl.y = 0;
+		upright = false;
+	}
+}
+void Horse_Animator::animation_loop() {
+	if (state == '@') {
+		state = Horse_Animator::possible_states[(rand() % 2) + 1];
+		frame_stop = (rand() % 10) + 5;
+	}
+	else {
+		switch (state){
+		case 's':
+			stroll(frame_stop);
+				break;
+		case 'c':
+			choose_direction(frame_stop);
+			break;
+		}
+	}
+}
+void Horse_Animator::stroll(int steps) {
+	current_tick = ((int)(glfwGetTime() * 2)) % 10;
+	if (current_tick != old_tick) {
+		frame++;
+		old_tick = current_tick;
+
+		if (frame < steps) {
+			my_horse->movement_log.x -= 0.5f;
+		}
+		else {
+			std::cout << "Done with " << steps << " steps." << std::endl;
+			frame = -1;
+			state = '@';
+		}
+	}
+
+}
+void Horse_Animator::choose_direction(int howconfused) {
+	current_tick = ((int)(glfwGetTime() * 2)) % 10;
+	if (current_tick != old_tick) {
+		frame++;
+		old_tick = current_tick;
+
+		if (frame < howconfused) {
+		
+
+		if (flip_coin()) {
+			my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log);
+			my_horse->rotation = glm::rotate(my_horse->rotation, glm::radians(-15.f), glm::vec3(0.0f, 1.0f, 0.0f));
+			my_horse->rotation = glm::translate(my_horse->rotation, -my_horse->movement_log);
+		}
+		else {
+			my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log);
+			my_horse->rotation = glm::rotate(my_horse->rotation, glm::radians(15.f), glm::vec3(0.0f, 1.0f, 0.0f));
+			my_horse->rotation = glm::translate(my_horse->rotation, -my_horse->movement_log);
+		
+	}
+		}
+		else {
+			std::cout << "Horse was confused for " << howconfused << " ticks." << std::endl;
+			frame = -1;
+			state = '@';
+		}
+	}
+}
+void Horse_Animator::walko() {
+	current_tick = ((int)(glfwGetTime() * 15)) % 10;
+
+	if (!upright) {
+		my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log + glm::vec3(0.f, 1.3f, 0));
+		my_horse->rotation *= glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		my_horse->rotation = glm::translate(my_horse->rotation, -(my_horse->movement_log + glm::vec3(0.f, 1.3f, 0)));
+
+		upright = true;
+
+	}
+	switch (current_tick % 10) {
+
+	case 1: {
+
+		my_horse->neckrot.y = 45;
+		my_horse->headrot.y = 0;
+		my_horse->ulfl.y = 65;
+		my_horse->urfl.y = 100;
+		my_horse->ulhl.y = 95;
+		my_horse->urhl.y = 70;
+		my_horse->llfl.y = -15;
+		my_horse->lrfl.y = -20;
+		my_horse->llhl.y = 15;
+		my_horse->lrhl.y = 5;
+
+
+	}
+			break;
+	case 2: {
+
+		my_horse->neckrot.y = 45;
+		my_horse->headrot.y = 0;
+		my_horse->ulfl.y = 60;
+		my_horse->urfl.y = 105;
+		my_horse->ulhl.y = 100;
+		my_horse->urhl.y = 65;
+		my_horse->llfl.y = -15;
+		my_horse->lrfl.y = -20;
+		my_horse->llhl.y = 15;
+		my_horse->lrhl.y = 5;
+	}			break;
+
+	case 3: {
+
+		my_horse->neckrot.y = 45;
+		my_horse->headrot.y = -15;
+		my_horse->ulfl.y = 55;
+		my_horse->urfl.y = 110;
+		my_horse->ulhl.y = 105;
+		my_horse->urhl.y = 60;
+		my_horse->llfl.y = -15;
+		my_horse->lrfl.y = -20;
+		my_horse->llhl.y = 15;
+		my_horse->lrhl.y = 5;
+	}			break;
+
+	case 4: {
+
+		my_horse->neckrot.y = 55;
+		my_horse->headrot.y = 0;
+		my_horse->ulfl.y = 60;
+		my_horse->urfl.y = 105;
+		my_horse->ulhl.y = 100;
+		my_horse->urhl.y = 65;
+		my_horse->llfl.y = -15;
+		my_horse->lrfl.y = -20;
+		my_horse->llhl.y = 20;
+		my_horse->lrhl.y = 5;
+	}			break;
+
+	case 5: {
+
+		my_horse->neckrot.y = 65;
+		my_horse->headrot.y = 5;
+		my_horse->ulfl.y = 70;
+		my_horse->urfl.y = 95;
+		my_horse->ulhl.y = 90;
+		my_horse->urhl.y = 75;
+		my_horse->llfl.y = -15;
+		my_horse->lrfl.y = -20;
+		my_horse->llhl.y = 20;
+		my_horse->lrhl.y = 5;
+	}			break;
+
+	case 6: {
+
+		my_horse->neckrot.y = 60;
+		my_horse->headrot.y = -10;
+		my_horse->ulfl.y = 80;
+		my_horse->urfl.y = 85;
+		my_horse->ulhl.y = 80;
+		my_horse->urhl.y = 85;
+		my_horse->llfl.y = -15;
+		my_horse->lrfl.y = -25;
+		my_horse->llhl.y = 25;
+		my_horse->lrhl.y = 5;
+	}			break;
+
+	case 7: {
+
+		my_horse->neckrot.y = 50;
+		my_horse->headrot.y = -35;
+		my_horse->ulfl.y = 90;
+		my_horse->urfl.y = 75;
+		my_horse->ulhl.y = 70;
+		my_horse->urhl.y = 95;
+		my_horse->llfl.y = -15;
+		my_horse->lrfl.y = -20;
+		my_horse->llhl.y = 5;
+		my_horse->lrhl.y = 5;
+	}			break;
+
+	case 8: {
+
+		my_horse->neckrot.y = 55;
+		my_horse->headrot.y = -15;
+		my_horse->ulfl.y = 80;
+		my_horse->urfl.y = 85;
+		my_horse->ulhl.y = 80;
+		my_horse->urhl.y = 85;
+		my_horse->llfl.y = -15;
+		my_horse->lrfl.y = -20;
+		my_horse->llhl.y = 5;
+		my_horse->lrhl.y = 5;
+	}			break;
+
+	case 9: {
+
+		my_horse->neckrot.y = 70;
+		my_horse->headrot.y = 0;
+		my_horse->ulfl.y = 75;
+		my_horse->urfl.y = 105;
+		my_horse->ulhl.y = 95;
+		my_horse->urhl.y = 80;
+		my_horse->llfl.y = -15;
+		my_horse->lrfl.y = -20;
+		my_horse->llhl.y = 10;
+		my_horse->lrhl.y = 5;
+	}			break;
+
+	}
 }
