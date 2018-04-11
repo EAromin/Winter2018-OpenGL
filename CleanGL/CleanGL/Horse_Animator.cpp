@@ -80,38 +80,15 @@ void Horse_Animator::stroll(int steps) {
 
 		if (frame < steps) {
 			glm::vec3 abspos = my_horse->get_absolute_position();
-			if (my_horse->get_absolute_position().x < -49 ){
+			if ((my_horse->get_absolute_position().x < -49) || (my_horse->get_absolute_position().x > 49) ||
+				(my_horse->get_absolute_position().z < -49) || (my_horse->get_absolute_position().z > 49)) {
+
 				my_horse->movement_log.x += 4.f;
 				my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log);
 				my_horse->rotation = glm::rotate(my_horse->rotation, glm::radians(-180.f), glm::vec3(0.0f, 1.0f, 0.0f));
 				my_horse->rotation = glm::translate(my_horse->rotation, -my_horse->movement_log);
-			
 
 			}
-			 if (my_horse->get_absolute_position().x > 49) {
-				 my_horse->movement_log.x += 4.f;
-				my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log);
-				my_horse->rotation = glm::rotate(my_horse->rotation, glm::radians(-180.f), glm::vec3(0.0f, 1.0f, 0.0f));
-				my_horse->rotation = glm::translate(my_horse->rotation, -my_horse->movement_log);
-			
-
-			 }
-			 if (my_horse->get_absolute_position().z > 49) {
-				 my_horse->movement_log.x += 4.f;
-				my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log);
-				my_horse->rotation = glm::rotate(my_horse->rotation, glm::radians(-180.f), glm::vec3(0.0f, 1.0f, 0.0f));
-				my_horse->rotation = glm::translate(my_horse->rotation, -my_horse->movement_log);
-			
-
-			 }
-			 if (my_horse->get_absolute_position().z < -49) {
-				 my_horse->movement_log.x += 4.f;
-				my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log);
-				my_horse->rotation = glm::rotate(my_horse->rotation, glm::radians(-180.f), glm::vec3(0.0f, 1.0f, 0.0f));
-				my_horse->rotation = glm::translate(my_horse->rotation, -my_horse->movement_log);
-			
-			 }
-			
 			else {
 				my_horse->movement_log.x -= 0.5f;
 			}
