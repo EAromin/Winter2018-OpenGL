@@ -15,29 +15,50 @@ float Bounding_Sphere::compute_distance(const Bounding_Sphere & a, const Boundin
 }
 
 void Bounding_Sphere::update_collision()
-{if(!bs.empty()){
-	for (int i = 0; i < bs.size() - 1; i++)
-	{
-		if (!bs[i]->touchy_horse->stopped)
+{
+	if (!bs.empty()) {
+		for (int i = 0; i < bs.size() ; i++)
 		{
-
-			for (int j = 0; j < bs.size()-1; j++)
+			if (!bs[i]->touchy_horse->stopped)
 			{
-				if (i!=j &&(compute_distance(*bs[i], *bs[j]) <= (bs[i]->radius + bs[j]->radius)))
+
+				for (int j = 0; j < bs.size(); j++)
 				{
+					if (i != j && (compute_distance(*bs[i], *bs[j]) <= (bs[i]->radius + bs[j]->radius)))
+					{
+
+						if (bs[j]->touchy_horse->horse_size != 2.0f)
+							bs[j]->touchy_horse->horse_size = 2.0f;
+						bs[j]->touchy_horse->stopped = true;
+					}
 					
-					if (bs[j]->touchy_horse->horse_size != 2.0f)
-						bs[j]->touchy_horse->horse_size = 2.0f;
-					bs[j]->touchy_horse->stopped = true;
-				}else
+				}
+			}
+
+			else{
+				for(int j = 0; j <bs.size(); j++)
 				{
+					if ((i != j) && (compute_distance(*bs[i], *bs[j]) <= (bs[i]->radius + bs[j]->radius)))
+					{
+						if (bs[j]->touchy_horse->stopped) {
+							bs[j]->touchy_horse->stopped = false;
+							bs[j]->touchy_horse->horse_size = 1.0f;
+						}
+						bs[i]->touchy_horse->horse_size = 2.0f;
+						bs[i]->touchy_horse->stopped = true;
+						break;
+					}
 					bs[i]->touchy_horse->stopped = false;
-					bs[j]->touchy_horse->stopped = false;
+					bs[i]->touchy_horse->horse_size = 1.0f;
+
+					
 				}
 			}
 		}
 	}
-}
+
+
+
 }
 
 Bounding_Sphere::Bounding_Sphere(){
@@ -50,10 +71,9 @@ Bounding_Sphere::Bounding_Sphere(){
 Bounding_Sphere::Bounding_Sphere(Horse &horsie){
 	touchy_horse = &horsie;
 	location = touchy_horse->get_absolute_position();
-	radius = 1* touchy_horse -> horse_size;
+	radius = 2.f* touchy_horse -> horse_size;
 	touchy_horse->touchy_ball = this;
 	Bounding_Sphere *dis = this;
 	bs.push_back(this);
-	std::cout << "#of obj with sphere collider = " << bs.size() << std::endl;
 
 }

@@ -11,11 +11,13 @@ GLuint *Horse::horse_shader = nullptr;
 Horse::Horse() {
 	joints[11] = { false };
 	touchy_ball = nullptr;
+	stopped = false;
 }
 Horse::Horse(float x, float y, float z) {
 	joints[11] = { false };
 	movement_log = glm::vec3(x, y, z);
 	touchy_ball = nullptr;
+	stopped = false;
 }
 
 void Horse::set_shader(GLuint & shader)
@@ -112,6 +114,7 @@ void Horse::stop_gallop() {
 		upright = false;
 	}
 }
+
 void Horse::gallop() {
 	if (!upright) {
 		rotation = glm::translate(rotation, movement_log + glm::vec3(0.f, 1.3f, 0));
