@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Horse_Animator.h"
-
+#include "Bounding_Sphere.h"
 char Horse_Animator::possible_states[] = { '@',//default
 's',//stroll
 'c',//choose direction
@@ -54,18 +54,22 @@ void Horse_Animator::stoppo() {
 	}
 }
 void Horse_Animator::animation_loop() {
-	if (state == '@') {
-		state = Horse_Animator::possible_states[(rand() % 2) + 1];
-		frame_stop = (rand() % 10) + 5;
-	}
-	else {
-		switch (state){
-		case 's':
-			stroll(frame_stop);
+
+	if (!my_horse->stopped) {
+
+		if (state == '@') {
+			state = Horse_Animator::possible_states[(rand() % 2) + 1];
+			frame_stop = (rand() % 10) + 5;
+		}
+		else {
+			switch (state){
+			case 's':
+				stroll(frame_stop);
+					break;
+			case 'c':
+				choose_direction(frame_stop);
 				break;
-		case 'c':
-			choose_direction(frame_stop);
-			break;
+			}
 		}
 	}
 }
@@ -79,7 +83,7 @@ void Horse_Animator::stroll(int steps) {
 			my_horse->movement_log.x -= 0.5f;
 		}
 		else {
-			std::cout << "Done with " << steps << " steps." << std::endl;
+			//std::cout << "Done with " << steps << " steps." << std::endl;
 			frame = -1;
 			state = '@';
 		}
@@ -91,6 +95,7 @@ void Horse_Animator::choose_direction(int howconfused) {
 	if (current_tick != old_tick) {
 		frame++;
 		old_tick = current_tick;
+		
 
 		if (frame < howconfused) {
 		
@@ -108,7 +113,7 @@ void Horse_Animator::choose_direction(int howconfused) {
 	}
 		}
 		else {
-			std::cout << "Horse was confused for " << howconfused << " ticks." << std::endl;
+			//std::cout << "Horse was confused for " << howconfused << " ticks." << std::endl;
 			frame = -1;
 			state = '@';
 		}

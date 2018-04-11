@@ -5,13 +5,13 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
+//#include "Bounding_Sphere.h"
 #include "Part.h"
 #include "Cube.h"
+class Bounding_Sphere;
 
 class Horse {
 private:
-	int frame;
 	void debug_anim();
 	void set_core();
 
@@ -53,8 +53,12 @@ private:
 	bool upright = false;
 	bool run_toggle = false;
 public:
+	bool is_god = false;
+	bool stopped = false;
+	int frame;
 	void gallop();
 	void stop_gallop();
+	Bounding_Sphere* touchy_ball;
 	glm::mat4 core_model; //anchor
 
 	//parts. vec3 after each one is their respective logs for rotations

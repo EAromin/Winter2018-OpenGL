@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Horse.h"
+#include "Bounding_Sphere.h"
 #include <vector>
 #include <stdlib.h>    
 #include <time.h> 
@@ -7,13 +8,15 @@
 #include <string>
 #define HORSE_ROTATION_LEVEL  5.0f
 GLuint *Horse::horse_shader = nullptr;
- Horse::Horse() {
+Horse::Horse() {
 	joints[11] = { false };
+	touchy_ball = nullptr;
 }
- Horse::Horse(float x, float y, float z) {
-	 joints[11] = { false };
-	 movement_log = glm::vec3(x,y,z);
- }
+Horse::Horse(float x, float y, float z) {
+	joints[11] = { false };
+	movement_log = glm::vec3(x, y, z);
+	touchy_ball = nullptr;
+}
 
 void Horse::set_shader(GLuint & shader)
 {
@@ -23,10 +26,10 @@ void Horse::set_shader(GLuint & shader)
 void Horse::set_model(glm::mat4 &model)
 {
 	core_model = model;
-	
+
 }
 void Horse::ready() {
-	
+
 }
 void Horse::draw()
 {
@@ -78,14 +81,16 @@ void Horse::draw()
 		head->color = glm::vec4(1.0f);
 
 	}
-	
+
 
 	torso->draw();
-if (run_toggle)
-	gallop();
-else
-	stop_gallop();
+	if (run_toggle)
+		gallop();
+	else
+		stop_gallop();
 
+	if (touchy_ball != nullptr)
+		touchy_ball->location = get_absolute_position();
 }
 void Horse::stop_gallop() {
 	if (upright)
@@ -93,7 +98,7 @@ void Horse::stop_gallop() {
 		rotation = glm::translate(rotation, movement_log + glm::vec3(0.f, 1.3f, 0));
 		rotation *= glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 		rotation = glm::translate(rotation, -(movement_log + glm::vec3(0.f, 1.3f, 0)));
-		
+
 		neckrot.y = 0;
 		headrot.y = 0;
 		ulfl.y = 0;
@@ -109,16 +114,16 @@ void Horse::stop_gallop() {
 }
 void Horse::gallop() {
 	if (!upright) {
-		rotation = glm::translate(rotation,movement_log + glm::vec3(0.f, 1.3f,0));
+		rotation = glm::translate(rotation, movement_log + glm::vec3(0.f, 1.3f, 0));
 		rotation *= glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 		rotation = glm::translate(rotation, -(movement_log + glm::vec3(0.f, 1.3f, 0)));
 
 		upright = true;
 
 	}
-	 frame = ((int)(glfwGetTime()*15)) % 10;
+	frame = ((int)(glfwGetTime() * 15)) % 10;
 	switch (frame) {
-		
+
 	case 1: {
 
 		neckrot.y = 45;
@@ -150,7 +155,7 @@ void Horse::gallop() {
 	}			break;
 
 	case 3: {
-		
+
 		neckrot.y = 45;
 		headrot.y = -15;
 		ulfl.y = 55;
@@ -178,7 +183,7 @@ void Horse::gallop() {
 	}			break;
 
 	case 5: {
-		
+
 		neckrot.y = 65;
 		headrot.y = 5;
 		ulfl.y = 70;
@@ -192,7 +197,7 @@ void Horse::gallop() {
 	}			break;
 
 	case 6: {
-		
+
 		neckrot.y = 60;
 		headrot.y = -10;
 		ulfl.y = 80;
@@ -206,7 +211,7 @@ void Horse::gallop() {
 	}			break;
 
 	case 7: {
-		
+
 		neckrot.y = 50;
 		headrot.y = -35;
 		ulfl.y = 90;
@@ -216,7 +221,7 @@ void Horse::gallop() {
 		llfl.y = -15;
 		lrfl.y = -20;
 		llhl.y = 5;
-		 lrhl.y = 5;
+		lrhl.y = 5;
 	}			break;
 
 	case 8: {
@@ -247,9 +252,9 @@ void Horse::gallop() {
 		lrhl.y = 5;
 	}			break;
 
-			std::cout << frame << std::endl;
-}
-//	std::cout << "Frame : " << frame << std::endl;
+		std::cout << frame << std::endl;
+	}
+	//	std::cout << "Frame : " << frame << std::endl;
 }
 void Horse::horse_controller(GLFWwindow* window)
 {
@@ -262,8 +267,8 @@ void Horse::horse_controller(GLFWwindow* window)
 	{
 		if (w_press) {
 			movement_log.x--;
-	
-			std::cout <<"("<< std::to_string(get_absolute_position().x)<< ", " << std::to_string(get_absolute_position().y) << ", " << std::to_string(get_absolute_position().z) <<")"<< std::endl;
+
+			std::cout << "(" << std::to_string(get_absolute_position().x) << ", " << std::to_string(get_absolute_position().y) << ", " << std::to_string(get_absolute_position().z) << ")" << std::endl;
 
 		}
 		w_press = false;
@@ -330,7 +335,7 @@ void Horse::horse_controller(GLFWwindow* window)
 	else if ((glfwGetKey(window, GLFW_KEY_D) == GLFW_RELEASE))
 	{
 		if (d_press) {
-			rotation = glm::translate(rotation,movement_log);
+			rotation = glm::translate(rotation, movement_log);
 			rotation = glm::rotate(rotation, glm::radians(-HORSE_ROTATION_LEVEL), glm::vec3(0.0f, 1.0f, 0.0f));
 			rotation = glm::translate(rotation, -movement_log);
 		}
@@ -345,14 +350,14 @@ void Horse::horse_controller(GLFWwindow* window)
 	else if ((glfwGetKey(window, GLFW_KEY_W) == GLFW_RELEASE))
 	{
 		if (w_press) {
-			rotation = glm::translate(rotation, (movement_log + glm::vec3(0.0f,1.1f,0.0f)));
-			rotation = glm::rotate(rotation, glm::radians(-HORSE_ROTATION_LEVEL), glm::vec3(0.0f, 0.0f,1.0f));
-			rotation = glm::translate(rotation, -(movement_log + glm::vec3(0.0f,1.1f,0.0f)));
+			rotation = glm::translate(rotation, (movement_log + glm::vec3(0.0f, 1.1f, 0.0f)));
+			rotation = glm::rotate(rotation, glm::radians(-HORSE_ROTATION_LEVEL), glm::vec3(0.0f, 0.0f, 1.0f));
+			rotation = glm::translate(rotation, -(movement_log + glm::vec3(0.0f, 1.1f, 0.0f)));
 		}
 		w_press = false;
 	}
 	//tilt down
-	
+
 	if ((glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS))
 	{
 		s_press = true;
@@ -360,9 +365,9 @@ void Horse::horse_controller(GLFWwindow* window)
 	else if ((glfwGetKey(window, GLFW_KEY_S) == GLFW_RELEASE))
 	{
 		if (s_press) {
-			rotation = glm::translate(rotation, (movement_log + glm::vec3(0.0f,1.1f,0.0f)));
+			rotation = glm::translate(rotation, (movement_log + glm::vec3(0.0f, 1.1f, 0.0f)));
 			rotation = glm::rotate(rotation, glm::radians(HORSE_ROTATION_LEVEL), glm::vec3(0.0f, 0.0f, 1.0f));
-			rotation = glm::translate(rotation, -(movement_log + glm::vec3(0.0f,1.1f,0.0f)));
+			rotation = glm::translate(rotation, -(movement_log + glm::vec3(0.0f, 1.1f, 0.0f)));
 		}
 		s_press = false;
 	}
@@ -379,7 +384,7 @@ void Horse::horse_controller(GLFWwindow* window)
 			int randx = rand() % 99 - 49;
 			int randz = rand() % 99 - 49;
 			rotation = glm::mat4(1.0f);
-			movement_log = glm::vec3(randx + 0.0f, 0.0f,randz + 0.0f);
+			movement_log = glm::vec3(randx + 0.0f, 0.0f, randz + 0.0f);
 		}
 		space_press = false;
 	}
@@ -399,6 +404,10 @@ void Horse::horse_controller(GLFWwindow* window)
 
 void Horse::joint_controller(GLFWwindow * window)
 {
+	if ((glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS))
+	{
+		debug_anim();
+	}
 	if ((glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS))
 	{
 		joints[10] = true;
@@ -415,9 +424,9 @@ void Horse::joint_controller(GLFWwindow * window)
 	}
 	if ((glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS))
 	{
-		std::cout << "("<<movement_log.x<<", "<<movement_log.z<<")" << std::endl;
+		std::cout << "(" << movement_log.x << ", " << movement_log.z << ")" << std::endl;
 	}
-	
+
 	if ((glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) && (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS))
 	{
 		joints[0] = true;
@@ -765,7 +774,7 @@ void Horse::set_lower_right_hind_leg()
 
 void Horse::set_lower_left_front_leg()
 {
-	
+
 	lower_left_front_leg->joint_loc = -horse_size*front_left_knee;
 	lower_left_front_leg->scale_matrix = glm::scale(glm::mat4(1.0f), horse_size* glm::vec3(0.15f, 0.5f, 0.15f));
 	lower_left_front_leg->model_matrix *= glm::translate(glm::mat4(1.0f), horse_size*glm::vec3(0.f, 0.5f, -0.f)); // move it according to world xyz, base position of it. 
@@ -785,7 +794,7 @@ void Horse::set_lower_right_front_leg()
 
 //DRAW NEK
 void Horse::set_neck() {
-	
+
 
 	neck->joint_loc = -horse_size*neck_to_torso; //neck_to_torso
 	neck->scale_matrix = glm::scale(glm::mat4(1.0f), horse_size*glm::vec3(0.30f, 0.65f, 0.30f));
@@ -803,9 +812,9 @@ void Horse::set_head() {
 	head->joint_loc = -horse_size*head_to_neck;//head_to_neck
 	//head->joint_loc = head->parent->joint_loc;
 	head->scale_matrix = glm::scale(glm::mat4(1.0f), horse_size*glm::vec3(0.20f, 0.50f, 0.35f));
-	head->model_matrix *= glm::translate(glm::mat4(1.0f), (horse_size*glm::vec3(-0.00f,0.6f, 0.0f))); // move it according to world xyz, base position of it. 
+	head->model_matrix *= glm::translate(glm::mat4(1.0f), (horse_size*glm::vec3(-0.00f, 0.6f, 0.0f))); // move it according to world xyz, base position of it. 
    // head->translation_matrix *= glm::translate(head->translation_matrix, horse_size*glm::vec3(0.00f, .250f, 0.0f));
-	head->rotation_matrix = glm::rotate(head->rotation_matrix, glm::radians( 110.0f +headrot.y), glm::vec3(0.0f, 0.0f, 1.0f));
+	head->rotation_matrix = glm::rotate(head->rotation_matrix, glm::radians(110.0f + headrot.y), glm::vec3(0.0f, 0.0f, 1.0f));
 	head->color = glm::vec4(0.4f, 0.0941176470588235f, 0.0f, 1.0f);
-	
+
 }
