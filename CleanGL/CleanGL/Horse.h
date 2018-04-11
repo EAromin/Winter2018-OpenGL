@@ -54,7 +54,7 @@ private:
 	bool run_toggle = false;
 public:
 	bool is_god = false;
-	bool stopped = false;
+	bool stopped;
 	int frame;
 	void gallop();
 	void stop_gallop();

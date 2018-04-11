@@ -11,7 +11,7 @@ int Horse_Animator::flip_coin()
 	return temp;
 }
 
-Horse_Animator::Horse_Animator(Horse &horsie,  float angle)
+Horse_Animator::Horse_Animator(Horse &horsie, float angle)
 {
 	my_horse = &horsie;
 	old_tick = 0;
@@ -55,23 +55,22 @@ void Horse_Animator::stoppo() {
 }
 void Horse_Animator::animation_loop() {
 
-	if (!my_horse->stopped) {
 
 		if (state == '@') {
 			state = Horse_Animator::possible_states[(rand() % 2) + 1];
 			frame_stop = (rand() % 10) + 5;
 		}
 		else {
-			switch (state){
+			switch (state) {
 			case 's':
 				stroll(frame_stop);
-					break;
+				break;
 			case 'c':
 				choose_direction(frame_stop);
 				break;
 			}
 		}
-	}
+	
 }
 void Horse_Animator::stroll(int steps) {
 	current_tick = ((int)(glfwGetTime() * 2)) % 10;
@@ -80,7 +79,17 @@ void Horse_Animator::stroll(int steps) {
 		old_tick = current_tick;
 
 		if (frame < steps) {
-			my_horse->movement_log.x -= 0.5f;
+			if (my_horse->get_absolute_position().x < -49 || my_horse->get_absolute_position().x > 49
+				|| my_horse->get_absolute_position().z < -49 || my_horse->get_absolute_position().z > 49) {
+				my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log);
+				my_horse->rotation = glm::rotate(my_horse->rotation, glm::radians(-15.f), glm::vec3(0.0f, 1.0f, 0.0f));
+				my_horse->rotation = glm::translate(my_horse->rotation, -my_horse->movement_log);
+
+				my_horse->movement_log.x -= 1.0f;
+			}
+			else {
+				my_horse->movement_log.x -= 0.5f;
+			}
 		}
 		else {
 			//std::cout << "Done with " << steps << " steps." << std::endl;
@@ -95,22 +104,22 @@ void Horse_Animator::choose_direction(int howconfused) {
 	if (current_tick != old_tick) {
 		frame++;
 		old_tick = current_tick;
-		
+
 
 		if (frame < howconfused) {
-		
 
-		if (flip_coin()) {
-			my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log);
-			my_horse->rotation = glm::rotate(my_horse->rotation, glm::radians(-15.f), glm::vec3(0.0f, 1.0f, 0.0f));
-			my_horse->rotation = glm::translate(my_horse->rotation, -my_horse->movement_log);
-		}
-		else {
-			my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log);
-			my_horse->rotation = glm::rotate(my_horse->rotation, glm::radians(15.f), glm::vec3(0.0f, 1.0f, 0.0f));
-			my_horse->rotation = glm::translate(my_horse->rotation, -my_horse->movement_log);
-		
-	}
+
+			if (flip_coin()) {
+				my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log);
+				my_horse->rotation = glm::rotate(my_horse->rotation, glm::radians(-15.f), glm::vec3(0.0f, 1.0f, 0.0f));
+				my_horse->rotation = glm::translate(my_horse->rotation, -my_horse->movement_log);
+			}
+			else {
+				my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log);
+				my_horse->rotation = glm::rotate(my_horse->rotation, glm::radians(15.f), glm::vec3(0.0f, 1.0f, 0.0f));
+				my_horse->rotation = glm::translate(my_horse->rotation, -my_horse->movement_log);
+
+			}
 		}
 		else {
 			//std::cout << "Horse was confused for " << howconfused << " ticks." << std::endl;
@@ -124,7 +133,7 @@ void Horse_Animator::walko() {
 
 	if (!upright) {
 		my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log + glm::vec3(0.f, 1.3f, 0));
-		my_horse->rotation *= glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+		my_horse->rotation *= glm::rotate(glm::mat4(1.0f), glm::radians(-180.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 		my_horse->rotation = glm::translate(my_horse->rotation, -(my_horse->movement_log + glm::vec3(0.f, 1.3f, 0)));
 
 		upright = true;
