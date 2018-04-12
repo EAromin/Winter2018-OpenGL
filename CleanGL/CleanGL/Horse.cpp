@@ -257,7 +257,6 @@ void Horse::gallop() {
 
 		std::cout << frame << std::endl;
 	}
-	//	std::cout << "Frame : " << frame << std::endl;
 }
 void Horse::horse_controller(GLFWwindow* window)
 {
@@ -802,7 +801,6 @@ void Horse::set_neck() {
 	neck->joint_loc = -horse_size*neck_to_torso; //neck_to_torso
 	neck->scale_matrix = glm::scale(glm::mat4(1.0f), horse_size*glm::vec3(0.30f, 0.65f, 0.30f));
 	neck->model_matrix *= glm::translate(glm::mat4(1.0f), horse_size*glm::vec3(-0.3f, 0.0f, 0.0f)); // move it according to world xyz, base position of it. 
-	//neck->translation_matrix = glm::translate(neck->translation_matrix, horse_size*glm::vec3(-0.6f, 0.125f, 0.0f));
 	neck->rotation_matrix = glm::rotate(neck->rotation_matrix, glm::radians(40.0f + neckrot.y), glm::vec3(0.0f, 0.0f, 1.0f));
 	neck->rotation_matrix = glm::rotate(neck->rotation_matrix, glm::radians(neckrot.x), glm::vec3(0.0f, 1.0f, 0.0f));
 	neck->color = glm::vec4(0.7019607843137255f, 0.1647058823529412f, 0.0f, 1.0f);
@@ -813,10 +811,8 @@ void Horse::set_neck() {
 void Horse::set_head() {
 
 	head->joint_loc = -horse_size*head_to_neck;//head_to_neck
-	//head->joint_loc = head->parent->joint_loc;
 	head->scale_matrix = glm::scale(glm::mat4(1.0f), horse_size*glm::vec3(0.20f, 0.50f, 0.35f));
 	head->model_matrix *= glm::translate(glm::mat4(1.0f), (horse_size*glm::vec3(-0.00f, 0.6f, 0.0f))); // move it according to world xyz, base position of it. 
-   // head->translation_matrix *= glm::translate(head->translation_matrix, horse_size*glm::vec3(0.00f, .250f, 0.0f));
 	head->rotation_matrix = glm::rotate(head->rotation_matrix, glm::radians(110.0f + headrot.y), glm::vec3(0.0f, 0.0f, 1.0f));
 	head->color = glm::vec4(0.4f, 0.0941176470588235f, 0.0f, 1.0f);
 

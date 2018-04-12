@@ -2,6 +2,7 @@
 #include "Bounding_Sphere.h"
 #include <iostream>
 std::vector<Bounding_Sphere*> Bounding_Sphere::bs;
+//.. distance
 float Bounding_Sphere::compute_distance(const Bounding_Sphere & a, const Bounding_Sphere & b)
 {
 
@@ -14,6 +15,7 @@ float Bounding_Sphere::compute_distance(const Bounding_Sphere & a, const Boundin
 	
 }
 
+//a disgusting check on stuff
 void Bounding_Sphere::update_collision()
 {
 	if (!bs.empty()) {
@@ -34,7 +36,7 @@ void Bounding_Sphere::update_collision()
 					
 				}
 			}
-
+			//second check to make sure horsies arent stuck at stopped
 			else{
 				for(int j = 0; j <bs.size(); j++)
 				{

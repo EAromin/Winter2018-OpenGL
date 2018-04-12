@@ -53,10 +53,7 @@ void CubicPart::draw()
 {
 	Cube::set();
 	rotate();
-	model_matrix *= translation_matrix; //this translation is rotated. If you want to give it absolute pos, translate relative to model
-
-
-	// do an external model_matrix *= glm::translate(glm::mat4(1.0f),(glm::vec3(x,y,z)));
+	model_matrix *= translation_matrix; 
 	model_matrix *= scale_matrix;
 	glUniformMatrix4fv(glGetUniformLocation(*shader, "model"), 1, GL_FALSE, glm::value_ptr(model_matrix));
 	glUniform4f(glGetUniformLocation(*shader, "col"), color.r, color.g, color.b,color.a);
