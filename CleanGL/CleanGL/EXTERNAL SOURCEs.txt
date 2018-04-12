@@ -1,3 +1,0 @@
-GLuint loadShaders(std::string vertex_shader_path, std::string fragment_shader_path);
-Along with the template sent in piazza was used as a base for this. So.. credits to the TA's
-https://github.com/nothings/stb/blob/master/stb_image.h
