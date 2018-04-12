@@ -13,6 +13,7 @@ private:
 	int frame_stop;
 	int looper;
 public:
+
 	static char possible_states[];
 	void walk();
 
