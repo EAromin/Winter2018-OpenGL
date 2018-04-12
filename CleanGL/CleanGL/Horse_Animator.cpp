@@ -13,7 +13,7 @@ int Horse_Animator::flip_coin()
 }
 
 void Horse_Animator::eat() {
-	current_tick = ((int)(glfwGetTime() * 10)) % 10;
+	current_tick = ((int)(glfwGetTime() * 10 * my_horse->speed)) % 10;
 	if (current_tick != old_tick) {
 		frame++;
 		old_tick = current_tick;
@@ -297,7 +297,7 @@ void Horse_Animator::animation_loop() {
 
 }
 void Horse_Animator::stroll(int steps) {
-	current_tick = ((int)(glfwGetTime() * 4)) % 10;
+	current_tick = ((int)(glfwGetTime() * 4 * my_horse->speed)) % 10;
 	if (current_tick != old_tick) {
 		frame++;
 		old_tick = current_tick;
@@ -353,7 +353,7 @@ void Horse_Animator::choose_direction(int howconfused) {
 	}
 }
 void Horse_Animator::walko() {
-	current_tick = ((int)(glfwGetTime() * 15)) % 10;
+	current_tick = ((int)(glfwGetTime() * 4 * my_horse->speed)) % 10;
 
 	if (!upright) {
 		my_horse->rotation = glm::translate(my_horse->rotation, my_horse->movement_log + glm::vec3(0.f, 1.3f, 0));

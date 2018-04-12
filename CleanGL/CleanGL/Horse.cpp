@@ -12,12 +12,14 @@ Horse::Horse() {
 	joints[11] = { false };
 	touchy_ball = nullptr;
 	stopped = false;
+	speed = rand() % 10 +1;
 }
 Horse::Horse(float x, float y, float z) {
 	joints[11] = { false };
 	movement_log = glm::vec3(x, y, z);
 	touchy_ball = nullptr;
 	stopped = false;
+	speed = rand() % 10 +1;
 }
 
 void Horse::set_shader(GLuint & shader)

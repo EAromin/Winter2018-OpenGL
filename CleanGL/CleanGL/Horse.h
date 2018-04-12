@@ -58,7 +58,7 @@ public:
 	int frame;
 	void gallop(); //old code turned into walko() in Horse_Animator
 	void stop_gallop();
-	
+	int speed;
 	Bounding_Sphere* touchy_ball;
 	glm::mat4 core_model; //anchor
 

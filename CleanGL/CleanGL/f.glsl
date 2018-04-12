@@ -78,9 +78,10 @@ void main()
 
    //specular
    	float specularStrength = .75;
-   	vec3 spec_light_dir = normalize(light_position - spec_frag_pos);
+    vec3 spec_light_dir = normalize(light_position - spec_frag_pos);
 	vec3 view_dir = normalize(view_position - spec_frag_pos);
 	vec3 reflect_dir = reflect(-spec_light_dir, normalize(spec_norm)); 
+
 
 	float spec = pow(max(dot(reflect_dir,view_dir), 0.0), 64);
 	vec3 specular = specularStrength * spec * lightColor; 
