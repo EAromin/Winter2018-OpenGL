@@ -11,14 +11,16 @@ private:
 	int current_tick;
 	int frame;
 	int frame_stop;
+	int looper;
 public:
 	static char possible_states[];
-
+	void walk();
 
 	int flip_coin();
 	Horse_Animator(Horse &horsie, float angle);
 	Horse_Animator();
 	void walko();
+	void eat();
 	void stoppo();
 	bool upright;
 	void animation_loop();

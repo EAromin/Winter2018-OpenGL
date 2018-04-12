@@ -56,8 +56,9 @@ public:
 	bool is_god = false;
 	bool stopped;
 	int frame;
-	void gallop();
+	void gallop(); //old code turned into walko() in Horse_Animator
 	void stop_gallop();
+	
 	Bounding_Sphere* touchy_ball;
 	glm::mat4 core_model; //anchor
 

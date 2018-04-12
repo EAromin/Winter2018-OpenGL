@@ -131,13 +131,13 @@ void Grid::draw()
 
 float Floor::floor_vertices[] = {
 
-	50.0f, 0.0f, 50.0f,		4.0f, 0.0f,	//bottom right
-	-50.0f, 0.0f, -50.0f,	0.0f,4.0f,	//upper left
+	50.0f, 0.0f, 50.0f,		50.0f, 0.0f,	//bottom right
+	-50.0f, 0.0f, -50.0f,	0.0f,50.0f,	//upper left
 	-50.0f, 0.0f, 50.0f,	0.0f, 0.0f,	//bottom left
 
-	50.0f, 0.0f, 50.0f,		4.0f, 0.0f,	//bottom right
-	50.0f, 0.0f, -50.0f,	4.0f, 4.0f,	//upper right
-	-50.0f, 0.0f, -50.0f,	0.0f, 4.0f	//upper left
+	50.0f, 0.0f, 50.0f,		50.0f, 0.0f,	//bottom right
+	50.0f, 0.0f, -50.0f,	50.0f, 50.0f,	//upper right
+	-50.0f, 0.0f, -50.0f,	0.0f, 50.0f	//upper left
 
 
 };
