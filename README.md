@@ -1,5 +1,4 @@
     CONSOLE APPLICATION : CleanGL Project Overview
-========================================================================
 NAME: Earl Steven Aromin
 ID: 40004997
 COURSE: COMP 371
