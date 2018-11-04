@@ -1,4 +1,3 @@
-========================================================================
     CONSOLE APPLICATION : CleanGL Project Overview
 ========================================================================
 NAME: Earl Steven Aromin
@@ -17,7 +16,6 @@ Teacher Slides
 
 
 
-=====================================================
 ASSIGNMENT 2 STUFF
 ======================================================
 KEYBINDING, SAME AS THE ONES IN ASSIGNMENT NOTES
@@ -26,11 +24,11 @@ KEYBINDING, SAME AS THE ONES IN ASSIGNMENT NOTES
 https://github.com/nothings/stb/blob/master/stb_image.h
 
 
-==============================================
-FINAL PROJECT STUFF
 
-Same keybindings as the ones in the notes.
+FINAL PROJECT STUFF
 ==============================================
+Same keybindings as the ones in the notes.
+
 
 
 
